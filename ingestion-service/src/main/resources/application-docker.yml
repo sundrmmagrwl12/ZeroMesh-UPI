@@ -1,0 +1,22 @@
+# Docker profile — overrides application.yml when SPRING_PROFILES_ACTIVE=docker
+# Service names match docker-compose.yml service names (NOT localhost!)
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/zeromeshdb
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+  kafka:
+    bootstrap-servers: kafka:9092
