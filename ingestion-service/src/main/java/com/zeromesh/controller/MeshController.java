@@ -25,13 +25,16 @@ public class MeshController {
     private final MeshSimulatorService simulatorService;
     private final CryptoService cryptoService;
     private final BridgeIngestionService ingestionService;
+    private final com.zeromesh.service.idempotency.IdempotencyService idempotencyService;
 
     public MeshController(MeshSimulatorService simulatorService,
                           CryptoService cryptoService,
-                          BridgeIngestionService ingestionService) {
-        this.simulatorService = simulatorService;
-        this.cryptoService    = cryptoService;
-        this.ingestionService = ingestionService;
+                          BridgeIngestionService ingestionService,
+                          com.zeromesh.service.idempotency.IdempotencyService idempotencyService) {
+        this.simulatorService   = simulatorService;
+        this.cryptoService      = cryptoService;
+        this.ingestionService   = ingestionService;
+        this.idempotencyService = idempotencyService;
     }
 
     /**
@@ -41,8 +44,10 @@ public class MeshController {
      */
     @PostMapping("/inject")
     public ResponseEntity<Map<String, Object>> inject(@RequestBody Map<String, String> request) throws Exception {
-        String senderId   = request.getOrDefault("senderId", "sundram@upi").trim();
-        String receiverId = request.getOrDefault("receiverId", "rahul@upi").trim();
+        String senderId   = request.getOrDefault("senderId", "sundram@upi").trim().toLowerCase();
+        String receiverId = request.getOrDefault("receiverId", "rahul@upi").trim().toLowerCase();
+        if (!senderId.contains("@")) senderId += "@upi";
+        if (!receiverId.contains("@")) receiverId += "@upi";
         String amount     = request.getOrDefault("amount", "500.00").trim();
 
         BigDecimal parsedAmount;
@@ -130,6 +135,7 @@ public class MeshController {
     @PostMapping("/reset")
     public ResponseEntity<Map<String, String>> reset() {
         simulatorService.resetNetwork();
+        idempotencyService.clearMemory();
         return ResponseEntity.ok(Map.of("message", "Mesh network reset successfully"));
     }
 

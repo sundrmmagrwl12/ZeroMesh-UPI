@@ -920,23 +920,25 @@ async function actionFlush() {
 
         if (records && records.length > 0) {
             const flushedIds = (data.results || []).map(r => r.packetId);
-            const matching   = records.find(r => flushedIds.includes(r.packetId));
-            if (!matching) { log('Settlement still processing... check ledger in a moment.', 'dim'); return; }
+            const matchedList = records.filter(r => flushedIds.includes(r.packetId));
+            if (matchedList.length === 0) { log('Settlement still processing... check ledger in a moment.', 'dim'); return; }
 
-            if (matching.status === 'SETTLED') {
-                log(`✓ Settlement Engine: SETTLED: ${matching.senderId} → ${matching.receiverId} (₹${parseFloat(matching.amount).toLocaleString('en-IN')})`, 'ok');
-                toast(`Settled: ₹${matching.amount} to ${matching.receiverId}`, 'ok');
-            } else if (matching.status === 'INSUFFICIENT_FUNDS') {
-                log(`⚠ Settlement Engine: INSUFFICIENT FUNDS: ${matching.senderId} balance too low for ₹${matching.amount}`, 'err');
-                toast(`Declined: Insufficient Funds for ${matching.senderId}`, 'err');
-            } else if (matching.status === 'TAMPERED') {
-                log(`☠ Settlement Engine: TAMPERED: Packet checksum or AES-GCM tag mismatch!`, 'err');
-                toast(`Security Alert: Tampered Packet Rejected!`, 'err');
-            } else if (matching.status === 'DUPLICATE') {
-                log(`🛡 Ingestion Service: REPLAY ATTACK BLOCKED: Duplicate packet rejected by Redis!`, 'warn');
-                toast(`Replay attack blocked`, 'info');
-            } else {
-                log(`Settlement status: ${matching.status}`, 'info');
+            for (const matching of matchedList) {
+                if (matching.status === 'SETTLED') {
+                    log(`✓ Settlement Engine: SETTLED: ${matching.senderId} → ${matching.receiverId} (₹${parseFloat(matching.amount).toLocaleString('en-IN')})`, 'ok');
+                    toast(`Settled: ₹${matching.amount} to ${matching.receiverId}`, 'ok');
+                } else if (matching.status === 'INSUFFICIENT_FUNDS') {
+                    log(`⚠ Settlement Engine: INSUFFICIENT FUNDS: ${matching.senderId} balance too low for ₹${matching.amount}`, 'err');
+                    toast(`Declined: Insufficient Funds for ${matching.senderId}`, 'err');
+                } else if (matching.status === 'TAMPERED') {
+                    log(`☠ Settlement Engine: TAMPERED: Packet checksum or AES-GCM tag mismatch!`, 'err');
+                    toast(`Security Alert: Tampered Packet Rejected!`, 'err');
+                } else if (matching.status === 'DUPLICATE') {
+                    log(`🛡 Ingestion Service: REPLAY ATTACK BLOCKED: Duplicate packet rejected by Redis!`, 'warn');
+                    toast(`Replay attack blocked`, 'info');
+                } else {
+                    log(`Settlement status: ${matching.status}`, 'info');
+                }
             }
         }
     } catch (e) { log('Flush failed: ' + e.message, 'err'); }

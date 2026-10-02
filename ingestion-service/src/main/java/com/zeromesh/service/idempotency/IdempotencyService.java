@@ -60,4 +60,9 @@ public class IdempotencyService {
             return localMemoryFallback.get(KEY_PREFIX + packetId);
         }
     }
+
+    // Clears in-memory fallback store on demo reset
+    public void clearMemory() {
+        localMemoryFallback.clear();
+    }
 }
