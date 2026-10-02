@@ -74,14 +74,28 @@ public class MeshSimulatorService {
     // Bridge device got internet — returns all held packets for server upload
     public List<MeshPacket> flushBridges() {
         List<MeshPacket> toUpload = new ArrayList<>();
+        java.util.Set<String> flushedPacketIds = new java.util.HashSet<>();
+
         for (VirtualDevice device : devices) {
             if (device.hasInternet() && !device.getPackets().isEmpty()) {
                 System.out.println("[" + device.getName() + "] Flushing "
                         + device.getPackets().size() + " packet(s) to server");
                 toUpload.addAll(device.getPackets());
+                for (MeshPacket p : device.getPackets()) {
+                    flushedPacketIds.add(p.getPacketId());
+                }
                 device.clearPackets();
             }
         }
+
+        // Once uploaded to server via bridge gateway, clear those packets from intermediate peer nodes
+        // so they do not continuously re-propagate across the mesh in future gossip rounds
+        if (!flushedPacketIds.isEmpty()) {
+            for (VirtualDevice device : devices) {
+                device.getPackets().removeIf(p -> flushedPacketIds.contains(p.getPacketId()));
+            }
+        }
+
         return toUpload;
     }
 
