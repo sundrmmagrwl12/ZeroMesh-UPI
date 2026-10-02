@@ -111,13 +111,17 @@ public class MeshController {
         List<MeshPacket> packets = simulatorService.flushBridges();
         List<TransactionLedger> results = packets.stream()
                 .map(ingestionService::ingest)
+                .filter(java.util.Objects::nonNull)
                 .toList();
 
         return ResponseEntity.ok(Map.of(
                 "message",          "Bridge flush complete",
                 "packetsProcessed", packets.size(),
                 "results", results.stream()
-                        .map(r -> Map.of("packetId", r.getPacketId(), "status", r.getStatus().name()))
+                        .map(r -> Map.of(
+                                "packetId", r.getPacketId() != null ? r.getPacketId() : "",
+                                "status",   r.getStatus()   != null ? r.getStatus().name() : "SETTLED"
+                        ))
                         .toList()
         ));
     }

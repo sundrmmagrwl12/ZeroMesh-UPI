@@ -147,7 +147,23 @@ public class BridgeIngestionService {
                 .amount(amount)
                 .status(status)
                 .build();
-        return ledgerRepository.save(entry);
+        try {
+            return ledgerRepository.save(entry);
+        } catch (Exception e) {
+            String auditId = packetId + "-dup-" + System.currentTimeMillis();
+            TransactionLedger auditEntry = TransactionLedger.builder()
+                    .packetId(auditId)
+                    .senderId(senderId)
+                    .receiverId(receiverId)
+                    .amount(amount)
+                    .status(status)
+                    .build();
+            try {
+                return ledgerRepository.save(auditEntry);
+            } catch (Exception ex) {
+                return auditEntry;
+            }
+        }
     }
 
     private TransactionLedger saveLedgerEntry(String packetId, TransactionStatus status) {

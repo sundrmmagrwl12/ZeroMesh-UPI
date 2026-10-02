@@ -8,6 +8,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class SettlementEventProducer {
@@ -23,26 +24,13 @@ public class SettlementEventProducer {
 
     /**
      * Publishes a validated MeshPacket to the Kafka settlement topic.
-     * packetId is used as the message key — guarantees same-packet ordering within a partition.
+     * Waits up to 600ms for broker ack — if Kafka is unavailable, throws exception to trigger fallback.
      */
-    public void publishSettlementEvent(MeshPacket packet) {
-        try {
-            String payload = objectMapper.writeValueAsString(packet);
-            CompletableFuture<SendResult<String, String>> future =
-                    kafkaTemplate.send(KafkaTopicConfig.SETTLEMENT_TOPIC, packet.getPacketId(), payload);
+    public void publishSettlementEvent(MeshPacket packet) throws Exception {
+        String payload = objectMapper.writeValueAsString(packet);
+        CompletableFuture<SendResult<String, String>> future =
+                kafkaTemplate.send(KafkaTopicConfig.SETTLEMENT_TOPIC, packet.getPacketId(), payload);
 
-            future.whenComplete((result, ex) -> {
-                if (ex != null) {
-                    System.err.println("[Producer] Failed to publish: " + packet.getPacketId()
-                            + " | " + ex.getMessage());
-                } else {
-                    System.out.println("[Producer] Published: " + packet.getPacketId()
-                            + " → Partition: " + result.getRecordMetadata().partition()
-                            + " | Offset: " + result.getRecordMetadata().offset());
-                }
-            });
-        } catch (Exception e) {
-            throw new RuntimeException("Kafka serialization failed: " + e.getMessage(), e);
-        }
+        future.get(600, TimeUnit.MILLISECONDS);
     }
 }
