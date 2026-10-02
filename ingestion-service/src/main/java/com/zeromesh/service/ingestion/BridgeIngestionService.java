@@ -115,7 +115,7 @@ public class BridgeIngestionService {
 
             if (senderOpt.isEmpty() || receiverOpt.isEmpty()) {
                 idempotencyService.release(packetId);
-                return saveLedgerEntryWithDetails(packetId, senderId, receiverId, amount, TransactionStatus.TAMPERED);
+                return saveLedgerEntryWithDetails(packetId, senderId, receiverId, amount, TransactionStatus.INVALID_ACCOUNT);
             }
 
             Account sender   = senderOpt.get();

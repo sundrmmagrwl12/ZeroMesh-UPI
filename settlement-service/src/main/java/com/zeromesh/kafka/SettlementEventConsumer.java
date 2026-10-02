@@ -100,7 +100,7 @@ public class SettlementEventConsumer {
 
             if (senderOpt.isEmpty() || receiverOpt.isEmpty()) {
                 idempotencyService.release(packetId);
-                saveLedger(packetId, senderId, receiverId, instruction.getAmount(), TransactionStatus.TAMPERED);
+                saveLedger(packetId, senderId, receiverId, instruction.getAmount(), TransactionStatus.INVALID_ACCOUNT);
                 System.err.println("[Consumer] Unknown account: " + senderId + " -> " + receiverId);
                 return;
             }

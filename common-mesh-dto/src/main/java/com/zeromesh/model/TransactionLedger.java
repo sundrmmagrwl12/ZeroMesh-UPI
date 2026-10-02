@@ -42,7 +42,8 @@ public class TransactionLedger {
         DUPLICATE,          // Rejected by Redis idempotency check
         EXPIRED,            // Packet older than 24 hours
         TAMPERED,           // SHA-256 checksum mismatch or AES-GCM auth tag failure
-        INSUFFICIENT_FUNDS  // Sender balance too low
+        INSUFFICIENT_FUNDS, // Sender balance too low
+        INVALID_ACCOUNT     // Account not found in core banking system
     }
 
     public TransactionLedger() {}

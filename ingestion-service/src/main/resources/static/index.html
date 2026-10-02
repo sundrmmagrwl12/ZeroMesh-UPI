@@ -368,6 +368,9 @@
         .badge-status.expired         { background: rgba(180,83,9,0.15); color: #f97316; border: 1px solid rgba(180,83,9,0.3); }
         .badge-status.expired::before { background: #f97316; }
 
+        .badge-status.invalid_account         { background: rgba(234,88,12,0.15); color: #fb923c; border: 1px solid rgba(234,88,12,0.4); box-shadow: 0 0 12px rgba(234,88,12,0.2); }
+        .badge-status.invalid_account::before { background: #fb923c; box-shadow: 0 0 6px #fb923c; }
+
         /* Pagination */
         .pagination-row {
             display: flex; align-items: center; justify-content: space-between;
@@ -936,6 +939,9 @@ async function actionFlush() {
                 } else if (matching.status === 'DUPLICATE') {
                     log(`🛡 Ingestion Service: REPLAY ATTACK BLOCKED: Duplicate packet rejected by Redis!`, 'warn');
                     toast(`Replay attack blocked`, 'info');
+                } else if (matching.status === 'INVALID_ACCOUNT') {
+                    log(`⚠ Settlement Engine: INVALID ACCOUNT: ${matching.senderId} or ${matching.receiverId} not found in Core Banking!`, 'err');
+                    toast(`Declined: Invalid UPI account`, 'err');
                 } else {
                     log(`Settlement status: ${matching.status}`, 'info');
                 }
