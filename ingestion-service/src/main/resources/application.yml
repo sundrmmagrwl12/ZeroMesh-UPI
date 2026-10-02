@@ -30,6 +30,10 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       acks: all
+      properties:
+        max.block.ms: 3000          # fail fast if broker unreachable (3s instead of default 60s)
+        request.timeout.ms: 3000    # socket-level timeout
+        delivery.timeout.ms: 5000   # total delivery timeout
     consumer:
       group-id: zeromesh-ingestion-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
