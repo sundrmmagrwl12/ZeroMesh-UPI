@@ -905,7 +905,7 @@ async function actionFlush() {
     log('🌐 Bridge node detected cellular network. Checking for packets to flush...', 'warn');
     try {
         const data = await safeFetch(`${API}/api/v1/mesh/flush`, { method: 'POST' }).then(r => r.json());
-        if (!data || data.packetsProcessed === 0) {
+        if (!data || data.packetsProcessed === undefined || data.packetsProcessed === 0) {
             log('Bridge node has no pending packets to flush.', 'dim');
             toast('No packets waiting at bridge node', 'info');
             await fetchNetwork();
