@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>ZeroMesh-UPI — Day 3 Master Study Notes</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+    @page {
+        size: A4;
+        margin: 14mm 14mm 16mm 14mm;
+        @bottom-right {
+            content: "ZeroMesh-UPI • Day 3 • Page " counter(page);
+            font-family: 'Inter', sans-serif;
+            font-size: 8.5pt;
+            color: #94a3b8;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: #0f172a;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Card */
+    .header-card {
+        background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #0f172a 100%);
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .badge-day {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.25);
+        color: #c7d2fe;
+        border: 1px solid rgba(165, 180, 252, 0.35);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .header-title {
+        font-size: 20pt;
+        font-weight: 900;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+    .header-sub {
+        font-size: 10.5pt;
+        color: #94a3b8;
+        margin: 0 0 14px 0;
+    }
+    .meta-bar {
+        display: flex;
+        gap: 20px;
+        font-size: 8.5pt;
+        color: #cbd5e1;
+        border-top: 1px solid rgba(255,255,255,0.14);
+        padding-top: 10px;
+    }
+    .meta-bar b { color: #38bdf8; }
+
+    /* Headings */
+    h1 {
+        font-size: 13.5pt;
+        font-weight: 800;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 6px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+    h2 {
+        font-size: 11pt;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+    }
+    h3 {
+        font-size: 10pt;
+        font-weight: 600;
+        color: #334155;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        page-break-after: avoid;
+    }
+
+    p { margin: 0 0 10px 0; }
+    b { color: #0f172a; }
+
+    /* Callout Boxes */
+    .story-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #6366f1;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .story-title {
+        font-weight: 700;
+        color: #4338ca;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
+
+    .warning-box {
+        background: #fffbeb;
+        border: 1px solid #fef3c7;
+        border-left: 4px solid #f59e0b;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .warning-title {
+        font-weight: 700;
+        color: #b45309;
+        margin-bottom: 4px;
+    }
+
+    .danger-box {
+        background: #fef2f2;
+        border: 1px solid #fee2e2;
+        border-left: 4px solid #ef4444;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .danger-title {
+        font-weight: 700;
+        color: #b91c1c;
+        margin-bottom: 4px;
+    }
+
+    .interview-box {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-left: 4px solid #10b981;
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+        margin: 14px 0;
+        page-break-inside: avoid;
+    }
+    .interview-title {
+        font-weight: 800;
+        color: #047857;
+        font-size: 9.5pt;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+    }
+    .interview-q {
+        font-weight: 700;
+        color: #065f46;
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+    .interview-ans {
+        font-size: 9.5pt;
+        color: #0f172a;
+        line-height: 1.5;
+    }
+
+    /* Code Blocks */
+    pre, code {
+        font-family: 'Fira Code', Consolas, Monaco, monospace;
+    }
+    code {
+        background: #f1f5f9;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 8.5pt;
+    }
+    pre {
+        background: #090d16;
+        color: #f8fafc;
+        border: 1px solid #1e293b;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 8.5pt;
+        line-height: 1.45;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0 16px 0;
+        font-size: 9pt;
+        page-break-inside: avoid;
+    }
+    th {
+        background: #f1f5f9;
+        color: #0f172a;
+        font-weight: 700;
+        text-align: left;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+    }
+    td {
+        padding: 8px 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    /* ASCII Diagrams */
+    .diagram-box {
+        background: #090d16;
+        color: #38bdf8;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'Fira Code', monospace;
+        font-size: 8pt;
+        line-height: 1.35;
+        white-space: pre;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid #e2e8f0;
+        margin: 18px 0;
+    }
+
+    ul, ol {
+        margin: 4px 0 10px 0;
+        padding-left: 22px;
+    }
+    li { margin-bottom: 4px; }
+
+    .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- Header Card -->
+<div class="header-card">
+    <div class="badge-day">Day 3 of 8 — Master Study Notes (Clean Edition)</div>
+    <div class="header-title">⚡ ZeroMesh-UPI: Core Settlement Engine & PostgreSQL ACID Deep-Dive</div>
+    <div class="header-sub">The Secret Vault Lifecycle, Dual-Layer Tampering, ACID Invariants, Immutable Ledger & HikariCP Tuning</div>
+    <div class="meta-bar">
+        <div><b>Candidate:</b> Sundram Singhal</div>
+        <div><b>Format:</b> Hinglish Conceptual Core + Ready-to-Speak English Scripts</div>
+        <div><b>Target Role:</b> Java Backend Developer / SDE-1</div>
+    </div>
+</div>
+
+<!-- SECTION 1 -->
+<h1>1. The Core Settlement Engine Lifecycle (Port 8081)</h1>
+
+<p>Jab Kafka broker message deliver karta hai, toh <b><code>SettlementEventConsumer.java</code></b> me Bank ka Core Engine step-by-step execute hota hai:</p>
+
+<div class="diagram-box">[ KAFKA TOPIC: 'mesh-payment-settlements' ]
+                      │
+                      │ 1. Event Delivered to @KafkaListener
+                      ▼
+[ Step 1: JSON Deserialization ] ──> MeshPacket object
+                      │
+                      │ 2. Dual Cryptographic Decryption
+                      ▼
+[ Step 2: CryptoService.java ]
+   ├── A. RSA-2048 Private Key  ──> Unwraps "encryptedKey" (Gets raw AES-256 key)
+   └── B. AES-256-GCM + IV      ──> Unlocks "ciphertext" + Verifies 128-bit GMAC Tag
+                      │
+                      │ 3. Produces Plaintext: "sundram@upi -> rahul@upi ₹500"
+                      ▼
+[ Step 3: Domain Validations ]
+   ├── Check 1: Is amount <= 0?                   ──> (Reject: TAMPERED)
+   ├── Check 2: Do accounts exist in DB?          ──> (Reject: INVALID_ACCOUNT)
+   └── Check 3: Sender balance >= amount?         ──> (Reject: INSUFFICIENT_FUNDS)
+                      │
+                      │ 4. All Checks Passed!
+                      ▼
+[ Step 4: @Transactional Database Settlement ]
+   ├── Sender Balance:   ₹2,000 - ₹500 = ₹1,500 (save with @Version)
+   ├── Receiver Balance: ₹1,000 + ₹500 = ₹1,500 (save with @Version)
+   ├── Ledger Table:     INSERT INTO transaction_ledger (Status: SETTLED)
+   └── Redis Status:     Update "zeromesh:packet:<id>" = SETTLED</div>
+
+<hr class="divider">
+
+<!-- SECTION 2 -->
+<h1>2. Dual-Layer Tamper Detection (Kahan Compare Hota Hai vs Kahan Direct Pata Lagta Hai?)</h1>
+
+<div class="warning-box">
+    <div class="warning-title">🔍 The Core Architecture Distinction:</div>
+    Lifafe ke bahar <code>packetId</code> hota hai aur andar band <code>ciphertext</code> string hoti hai. System me do alag-alag jagah par tampering detect hoti hai:
+</div>
+
+<h3>🛡️ Layer 1: Ingestion Gateway (Port 8080) — Comparison Check (Bina Tijori Khole)</h3>
+<ul>
+    <li>Ingestion Gateway ke paas Bank ki Private Key **nahi hoti**, isliye wo tijori khol nahi sakta.</li>
+    <li>Lekin JSON ke andar scrambled ciphertext string (e.g. <code>"kZ8Q2mP9..."</code>) public hoti hai.</li>
+    <li>Gateway bas us string ka hash nikaalta hai: <code>calculatedHash = SHA-256(ciphertext)</code>.</li>
+    <li>Gateway compare karta hai: <b>Kya <code>calculatedHash == packetId</code>?</b> Agar hacker ne ciphertext me ek dot bhi badla tha, toh hash match nahi hoga aur packet 2ms me drop ho jayega as <b><code>TAMPERED</code></b>!</li>
+</ul>
+
+<h3>🔐 Layer 2: Settlement Engine (Port 8081) — Direct Mathematical Tag Check</h3>
+<ul>
+    <li>Agar hacker ne ciphertext ke sath bahar ka `packetId` bhi badal diya tha, toh packet Gateway pass karke Settlement tak pahunch jayega.</li>
+    <li>Jab Bank apni RSA Private Key se AES key nikaal kar tijori kholne ke liye <code>aes.doFinal(ciphertext)</code> chalata hai:</li>
+    <li><b>Bank koi purana text compare nahi karta!</b> Kyunki humne **AES-256-GCM** use kiya hai, jisme **128-bit ka GMAC Authentication Tag** hota hai.</li>
+    <li>Agar ciphertext me ek bit (0 ya 1) bhi badli hai, toh math mismatch ho jati hai aur Java seedha error throw karta hai:  
+        <code style="color: #b91c1c;">javax.crypto.AEADBadTagException: Tag mismatch!</code></li>
+    <li><b>Direct pata lag jata hai!</b> Bank use turant drop karke Ledger me <b><code>TAMPERED</code></b> likh deta hai!</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SECTION 3 -->
+<h1>3. PostgreSQL ACID Properties in ZeroMesh-UPI</h1>
+
+<h2>3.1. 🅰️ Atomicity (All-or-Nothing / Ek Sath ya Kuch Bhi Nahi)</h2>
+<div class="story-box">
+    <div class="story-title">💥 The Mid-Flight Crash Scenario:</div>
+    Sundram Rahul ko ₹500 bhej raha hai. Sundram ke account se ₹500 cut gaye (₹2,000 ➔ ₹1,500). Tabhi bijli chali gayi ya server crash ho gaya! Rahul ke account me ₹500 jud hi nahi paaye.<br><br>
+    <b>Hamare Code me Solution:</b> Hamare consumer method par <b><code>@Transactional</code></b> laga hua hai. Debit, Credit aur Ledger Insert teeno ek hi database transaction me bandhe hain. Agar server crash ho gaya ya exception aayi, toh PostgreSQL turant <b>ROLLBACK</b> kar deta hai! Sundram ke ₹500 wapas restore ho jaate hain. Zero Paisa Lost!
+</div>
+
+<h2>3.2. 🅲 Consistency (Double-Entry Invariants / Maths ka Niyam)</h2>
+<p>Banking me ek universal rule hota hai: $\Delta \text{Sender} + \Delta \text{Receiver} = 0$. System me total money hamesha constant rehna chahiye.</p>
+<ul>
+    <li><b>Double-Entry Accounting:</b> Jitna amount sender se minus hoga (`-₹500`), utna hi exact amount receiver me plus hoga (`+₹500`).</li>
+    <li><b>Invariants Enforcement:</b> Code me check laga hai: <code>if (sender.getBalance() &lt; amount)</code> ➔ status = <code>INSUFFICIENT_FUNDS</code>. Account balance kabhi bhi 0 se neeche negative me nahi ja sakta.</li>
+</ul>
+
+<h2>3.3. 🅸 Isolation (Padosi ki Taak-Jhaank Rokna)</h2>
+<p>PostgreSQL ka default isolation level hota hai: <b><code>READ COMMITTED</code></b>.</p>
+<ul>
+    <li><b>Zero Dirty Reads:</b> Koi bhi doosra transaction (jaise user balance inquiry) tab tak naya balance nahi dekh sakta jab tak transaction 100% <code>COMMIT</code> na ho jaye. Aadhe-adhure uncommitted debits kisi ko nahi dikhte.</li>
+    <li><b>Write Isolation via JPA <code>@Version</code>:</b> Agar do settlement threads ek sath ek hi user ka balance update karne aate hain, toh JPA <code>@Version</code> collision detect karke doosre thread ko rollback kar deta hai.</li>
+</ul>
+
+<h2>3.4. 🅳 Durability (WAL - Write-Ahead Logging / Patthar ki Lakeer)</h2>
+<div class="story-box">
+    <div class="story-title">💾 Crash Recovery & The WAL Miracle:</div>
+    Jab transaction <code>COMMIT</code> hota hai, toh Postgres table file me likhne se pehle sequential disk par <b>WAL (Write-Ahead Log)</b> me entry append karta hai aur OS ko bolta hai <b><code>fsync()</code></b> (RAM se nikaal kar physical disk ke magnetic layer par flush karo).<br><br>
+    <b>Crash ke baad Recovery:</b> Agar commit hone ke 1 millisecond baad data-center ki bijli chali jaye, toh restart hone par Postgres sabse pehle <b>WAL file</b> padhta hai. Wo dekhta hai ki ye transaction committed tha par table me flush nahi ho paya tha, use turant replay karke table me apply kar deta hai! <b>Zero Data Loss!</b>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION 4 -->
+<h1>4. The Immutable Double-Entry Ledger (Passbook Audit)</h1>
+
+<h2>4.1. Banking ka Golden Rule: "No UPDATE, No DELETE!"</h2>
+<p>Asli banks (RBI, NPCI, ISO 20022 compliance) me financial ledger hamesha <b>APPEND-ONLY</b> hota hai:</p>
+<ul>
+    <li>Agar kisi transaction me koi galti ho jaye, toh bank purani row par <code>UPDATE</code> ya <code>DELETE</code> query kabhi nahi chalata.</li>
+    <li>Bank hamesha ek <b>nayi Compensatory Entry (`INSERT`)</b> likhta hai (jaise: Reversal / Refund).</li>
+    <li>Isse complete legal aur forensic audit trail maintain rehti hai.</li>
+</ul>
+
+<h2>4.2. Hamari 6 Statuses Taxonomy</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Status Enum</th>
+            <th>Trigger Condition</th>
+            <th>Where Detected?</th>
+            <th>Banking Meaning</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b><code>SETTLED</code></b></td>
+            <td>All checks valid. Atomic balance transferred.</td>
+            <td>Settlement Engine (Port 8081)</td>
+            <td>Payment Successful ✅</td>
+        </tr>
+        <tr>
+            <td><b><code>DUPLICATE</code></b></td>
+            <td>Same packet received again (Replay attack or multi-bridge flush).</td>
+            <td>Ingestion Gateway (Redis SETNX)</td>
+            <td>Replay Attack Blocked 🛡️</td>
+        </tr>
+        <tr>
+            <td><b><code>EXPIRED</code></b></td>
+            <td>Packet timestamp is older than 24 hours.</td>
+            <td>Ingestion Gateway (Stage 1)</td>
+            <td>Stale Instruction Rejected ⏰</td>
+        </tr>
+        <tr>
+            <td><b><code>TAMPERED</code></b></td>
+            <td>SHA-256 hash mismatch, AES-GCM tag failure, or amount $\le 0$.</td>
+            <td>Gateway Stage 2 OR Settlement Crypto</td>
+            <td>Security Attack Intercepted ☠️</td>
+        </tr>
+        <tr>
+            <td><b><code>INSUFFICIENT_FUNDS</code></b></td>
+            <td>Sender balance is less than required payment amount.</td>
+            <td>Settlement Engine (Balance Check)</td>
+            <td>Low Balance Decline ⚠️</td>
+        </tr>
+        <tr>
+            <td><b><code>INVALID_ACCOUNT</code></b></td>
+            <td>Sender or Receiver UPI ID not found in database.</td>
+            <td>Settlement Engine (Account Check)</td>
+            <td>Non-Existent Account Decline ❌</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><b>⚠️ <code>INVALID_ACCOUNT</code> vs <code>TAMPERED</code>:</b> <code>TAMPERED</code> ek security attack hai jisse cyber team ko alert jata hai. Jabki <code>INVALID_ACCOUNT</code> ek normal human mistake hai (kisi ne galat UPI ID daal di). Dono ko alag rakhna standard banking practice hai.</p>
+
+<div class="page-break"></div>
+
+<!-- SECTION 5 -->
+<h1>5. HikariCP Connection Pool Deep-Dive</h1>
+
+<h2>5.1. Naya Connection Har Baar Kyu Nahi Banate? (Taxi Stand Analogy)</h2>
+<div class="story-box">
+    <div class="story-title">🚕 The Ola Cab Parking Lot:</div>
+    Java aur PostgreSQL do alag computers par chalte hain. Har query ke liye naya connection banane me TCP handshake, SSL exchange, aur Postgres process fork hone me <b>50ms se 100ms</b> lagte hain!<br><br>
+    Agar hum 1 millisecond ke debit operation ke liye 100ms connection banane me lagayenge, toh system choke ho jayega. Isliye Spring Boot <b>HikariCP</b> use karta hai jo pehle se <b>10 ready-made open connections ka Pool (Parking Lot)</b> bana kar rakhta hai. Thread connection leta hai, 1ms me query chalata hai, aur connection wapas pool me daal deta hai!
+</div>
+
+<h2>5.2. The 500 Connections Myth vs. Brett Wooldridge Formula</h2>
+<p>Beginners sochte hain ki <code>maximum-pool-size: 500</code> karne se speed badhegi. Lekin PostgreSQL <b>Process-per-connection model</b> use karta hai:</p>
+<ul>
+    <li>Agar 4 CPU Cores ke server par 500 connections khol diye, toh CPU apna saara waqt sirf <b>Context Switching</b> me barbaad kar dega aur database hang ho jayega!</li>
+    <li><b>The Golden Formula:</b> $\text{Pool Size} = 2 \times \text{CPU Cores} + \text{Disk Spindle Count}$.</li>
+    <li>4 Cores ke liye sirf <b>10 connections</b> 500 connections ke mukable 10 guna zyada throughput dete hain!</li>
+</ul>
+
+<h2>5.3. Hamari Spring Boot HikariCP Configurations</h2>
+<pre><code>spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 10         # Pool me maximum 10 active connections rahenge
+      minimum-idle: 5               # 5 connections hamesha ready rahenge
+      connection-timeout: 3000      # 3s timeout: Agar connection na mile toh fail-fast karo (hang mat raho)
+      idle-timeout: 600000          # 10 min: Khali connection retire karo
+      max-lifetime: 1800000         # 30 min: Stale connection auto-refresh karo</code></pre>
+
+<hr class="divider">
+
+<!-- SECTION 6 -->
+<h1>6. Day 3 Mock Interview Repertoire (Ready English Scripts)</h1>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 1: Atomicity & Mid-Flight Failures</div>
+    <div class="interview-q">"What happens if the settlement server loses power midway after debiting the sender but before crediting the receiver?"</div>
+    <div class="interview-ans">
+        "Sir, our core settlement logic runs inside a Spring <b>`@Transactional`</b> boundary against PostgreSQL.<br><br>
+        Because the debit, credit, and immutable ledger insert are bound to a single atomic database transaction, a mid-flight crash or exception prevents the transaction from committing. Upon connection termination, PostgreSQL initiates an <b>automatic rollback</b> of all uncommitted state changes, fully restoring the sender's balance and preventing money from vanishing into thin air."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 2: Durability & Write-Ahead Logging (WAL)</div>
+    <div class="interview-q">"How does PostgreSQL guarantee transaction durability if hardware power fails 1ms after a commit acknowledgment?"</div>
+    <div class="interview-ans">
+        "Sir, PostgreSQL guarantees durability through <b>Write-Ahead Logging (WAL)</b> combined with synchronous disk `fsync`.<br><br>
+        Before modifying the database heap files on disk, Postgres writes the committed transaction changes sequentially to the WAL log on persistent storage and issues an `fsync()`. During server reboot, PostgreSQL's crash recovery process automatically inspects the WAL logs, identifies committed transactions that were not yet flushed to the heap tables, and replays them into state, guaranteeing zero data loss."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 3: Ledger Immutability & Audit Trail</div>
+    <div class="interview-q">"Why does your financial ledger table never execute UPDATE or DELETE operations?"</div>
+    <div class="interview-ans">
+        "Sir, in adherence to financial accounting standards (ISO 20022 and banking regulations), financial transaction ledgers must remain strictly <b>Immutable and Append-Only</b>.<br><br>
+        Executing `UPDATE` or `DELETE` destroys forensic audit trails. In ZeroMesh-UPI, every attempt—successful or declined—is permanently audited with a timestamp under our 6-status taxonomy (`SETTLED`, `DUPLICATE`, `EXPIRED`, `TAMPERED`, `INSUFFICIENT_FUNDS`, `INVALID_ACCOUNT`). If a reversal is ever required, a compensating transaction is appended rather than altering historical entries."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 4: Database Connection Pool Sizing</div>
+    <div class="interview-q">"How did you configure and tune HikariCP for high-throughput settlement?"</div>
+    <div class="interview-ans">
+        "Sir, we configure Spring Boot's default HikariCP connection pool with a compact pool size (10 connections) derived from the formula: $2 \times \text{CPU Cores} + \text{Disk Spindles}$.<br><br>
+        Over-allocating connection pools causes severe CPU context-switching degradation on PostgreSQL. By maintaining a lean pool with a 3000ms fail-fast timeout and decoupling edge traffic via Apache Kafka, our consumer threads enjoy sub-millisecond connection acquisition without starving database resources."
+    </div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION 7 -->
+<h1>7. Day 3 Quick Revision & Architecture Matrix</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Architecture Primitive</th>
+            <th>Implementation in ZeroMesh-UPI</th>
+            <th>Why it Exists</th>
+            <th>Production Guarantee</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Transaction Boundary</b></td>
+            <td><code>@Transactional</code> on Consumer</td>
+            <td>Binds Debit, Credit, and Ledger insert</td>
+            <td>Atomicity: All-or-Nothing rollback on mid-flight crashes</td>
+        </tr>
+        <tr>
+            <td><b>Isolation Level</b></td>
+            <td><code>READ COMMITTED</code> + JPA <code>@Version</code></td>
+            <td>Eliminates dirty reads & detects write collisions</td>
+            <td>Zero dirty reads, optimistic concurrency control</td>
+        </tr>
+        <tr>
+            <td><b>Durability Engine</b></td>
+            <td>PostgreSQL Write-Ahead Logging (WAL)</td>
+            <td>Sequential disk logging before heap flush</td>
+            <td>Crash recovery with zero committed data loss</td>
+        </tr>
+        <tr>
+            <td><b>Audit Architecture</b></td>
+            <td>Append-Only <code>transaction_ledger</code> table</td>
+            <td>Strictly forbids <code>UPDATE</code> and <code>DELETE</code></td>
+            <td>Complete ISO 20022 forensic auditability</td>
+        </tr>
+        <tr>
+            <td><b>Tier-2 Idempotency</b></td>
+            <td><code>packet_id UNIQUE</code> on Ledger Table</td>
+            <td>Database-level defense against Kafka redelivery</td>
+            <td>Prevents duplicate settlement records in PostgreSQL</td>
+        </tr>
+        <tr>
+            <td><b>Connection Manager</b></td>
+            <td>HikariCP (Max Pool: 10, Timeout: 3000ms)</td>
+            <td>Pre-warmed socket reuse (Ola Cab model)</td>
+            <td>Sub-millisecond checkout, prevents DB CPU context thrashing</td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; color: #94a3b8; font-size: 8.5pt; margin-top: 24px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+    ZeroMesh-UPI • Comprehensive Interview Prep Guide • Compiled for Sundram Singhal • Day 3 Complete
+</div>
+
+</body>
+</html>

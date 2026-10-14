@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>ZeroMesh-UPI — Day 4 Master Study Notes</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+    @page {
+        size: A4;
+        margin: 14mm 14mm 16mm 14mm;
+        @bottom-right {
+            content: "ZeroMesh-UPI • Day 4 • Page " counter(page);
+            font-family: 'Inter', sans-serif;
+            font-size: 8.5pt;
+            color: #94a3b8;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: #0f172a;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Card */
+    .header-card {
+        background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #0f172a 100%);
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .badge-day {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.25);
+        color: #c7d2fe;
+        border: 1px solid rgba(165, 180, 252, 0.35);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .header-title {
+        font-size: 20pt;
+        font-weight: 900;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+    .header-sub {
+        font-size: 10.5pt;
+        color: #94a3b8;
+        margin: 0 0 14px 0;
+    }
+    .meta-bar {
+        display: flex;
+        gap: 20px;
+        font-size: 8.5pt;
+        color: #cbd5e1;
+        border-top: 1px solid rgba(255,255,255,0.14);
+        padding-top: 10px;
+    }
+    .meta-bar b { color: #38bdf8; }
+
+    /* Headings */
+    h1 {
+        font-size: 13.5pt;
+        font-weight: 800;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 6px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+    h2 {
+        font-size: 11pt;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+    }
+    h3 {
+        font-size: 10pt;
+        font-weight: 600;
+        color: #334155;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        page-break-after: avoid;
+    }
+
+    p { margin: 0 0 10px 0; }
+    b { color: #0f172a; }
+
+    /* Callout Boxes */
+    .story-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #6366f1;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .story-title {
+        font-weight: 700;
+        color: #4338ca;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
+
+    .warning-box {
+        background: #fffbeb;
+        border: 1px solid #fef3c7;
+        border-left: 4px solid #f59e0b;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .warning-title {
+        font-weight: 700;
+        color: #b45309;
+        margin-bottom: 4px;
+    }
+
+    .danger-box {
+        background: #fef2f2;
+        border: 1px solid #fee2e2;
+        border-left: 4px solid #ef4444;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .danger-title {
+        font-weight: 700;
+        color: #b91c1c;
+        margin-bottom: 4px;
+    }
+
+    .interview-box {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-left: 4px solid #10b981;
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+        margin: 14px 0;
+        page-break-inside: avoid;
+    }
+    .interview-title {
+        font-weight: 800;
+        color: #047857;
+        font-size: 9.5pt;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+    }
+    .interview-q {
+        font-weight: 700;
+        color: #065f46;
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+    .interview-ans {
+        font-size: 9.5pt;
+        color: #0f172a;
+        line-height: 1.5;
+    }
+
+    /* Code Blocks */
+    pre, code {
+        font-family: 'Fira Code', Consolas, Monaco, monospace;
+    }
+    code {
+        background: #f1f5f9;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 8.5pt;
+    }
+    pre {
+        background: #090d16;
+        color: #f8fafc;
+        border: 1px solid #1e293b;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 8.5pt;
+        line-height: 1.45;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0 16px 0;
+        font-size: 9pt;
+        page-break-inside: avoid;
+    }
+    th {
+        background: #f1f5f9;
+        color: #0f172a;
+        font-weight: 700;
+        text-align: left;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+    }
+    td {
+        padding: 8px 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    /* ASCII Diagrams */
+    .diagram-box {
+        background: #090d16;
+        color: #38bdf8;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'Fira Code', monospace;
+        font-size: 8pt;
+        line-height: 1.35;
+        white-space: pre;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid #e2e8f0;
+        margin: 18px 0;
+    }
+
+    ul, ol {
+        margin: 4px 0 10px 0;
+        padding-left: 22px;
+    }
+    li { margin-bottom: 4px; }
+
+    .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- Header Card -->
+<div class="header-card">
+    <div class="badge-day">Day 4 of 8 — Master Study Notes (Clean Edition)</div>
+    <div class="header-title">⚡ ZeroMesh-UPI: Chaos Engineering, Security Attacks & Threat Modeling</div>
+    <div class="header-sub">The 5 Major Attack Vectors, Live Chaos Simulators, 1M Synthetic Packets Defense, TTL=5 Hop Physics & BLE Broadcast</div>
+    <div class="meta-bar">
+        <div><b>Candidate:</b> Sundram Singhal</div>
+        <div><b>Format:</b> Hinglish Conceptual Core + Ready-to-Speak English Scripts</div>
+        <div><b>Target Role:</b> Java Backend Developer / SDE-1</div>
+    </div>
+</div>
+
+<!-- SECTION 1 -->
+<h1>1. Threat Modeling Overview: Zero-Trust Bluetooth Environment</h1>
+
+<p>ZeroMesh-UPI ek aise environment me chalta hai jahan hum kisi par bharosa nahi karte (<b>Zero-Trust Network</b>). intermediate relay phones anjaan logon ke hain. Hacker packet ko hawa se sniff kar sakta hai, tamper kar sakta hai, ya replay kar sakta hai.</p>
+
+<p>Interviewer ko batane ke liye humne system me **Dedicated Chaos Engineering Endpoints** code kiye hain:</p>
+
+<div class="diagram-box">┌─────────────────────────────────────────────────────────────────────────────┐
+│ 🛡️ ZEROMESH-UPI LIVE CHAOS ENGINE ENDPOINTS (BridgeController.java)         │
+├───────────────────────────────┬─────────────────────────────────────────────┤
+│ 1. POST /api/v1/bridge/attack/tamper  ──> Injects altered ciphertext        │
+│ 2. POST /api/v1/bridge/attack/replay  ──> Resubmits duplicate packetId      │
+│ 3. POST /api/v1/bridge/attack/expired ──> Injects packet with timestamp >24h│
+└───────────────────────────────┴─────────────────────────────────────────────┘</div>
+
+<hr class="divider">
+
+<!-- SECTION 2 -->
+<h1>2. The 5 Major Attack Vectors & Production Defenses</h1>
+
+<h2>2.1. ☠️ Attack #1: Data Tamper Attack (Amount ₹500 ➔ ₹5,000)</h2>
+<div class="danger-box">
+    <div class="danger-title">🎯 Hacker ka Plan:</div>
+    Hacker Bluetooth hawa se packet capture karta hai aur payment amount ko ₹500 se badal kar ₹5,000 karne ki koshish karta hai, ya receiver ID badal kar apna account daalne ki koshish karta hai.
+</div>
+
+<h3>🧪 Chaos Simulator Code (`BridgeController.java` Line 59-73):</h3>
+<pre><code>@PostMapping("/attack/tamper")
+public ResponseEntity<Map<String, Object>> attackTamper() {
+    MeshPacket packet = MeshPacket.builder()
+            .packetId("TAMPER-ATTACK-" + System.currentTimeMillis())
+            .ttl(5)
+            .createdAt(System.currentTimeMillis())
+            .payload(new EncryptedPayloadDto("attacker-key", "attacker-iv", "altered-tampered-content"))
+            .build();
+
+    TransactionLedger result = ingestionService.ingest(packet);
+    return ResponseEntity.ok(Map.of(
+            "status", result.getStatus().name(), // ➔ "TAMPERED"
+            "message", "Stage-2 Checksum Mismatch: Altered ciphertext detected and rejected as TAMPERED"
+    ));
+}</code></pre>
+
+<h3>🛡️ Hamara Dual-Layer Defense:</h3>
+<ul>
+    <li><b>Tier-1 (Ingestion Gateway - Stage 2):</b> Gateway check karta hai: <code>SHA-256("altered-tampered-content") == packetId</code>? Hash mismatch hote hi packet **2 millisecond me reject** ho jata hai as <b><code>TAMPERED</code></b>.</li>
+    <li><b>Tier-2 (Settlement Engine):</b> Agar hacker bahar ka barcode bhi naya bana le, toh jab Bank AES-GCM tijori kholega, <b>128-bit GMAC Authentication Tag fail ho jayega</b> aur Java turant <code>AEADBadTagException</code> throw kar dega!</li>
+</ul>
+
+<h2>2.2. 🔁 Attack #2: The Replay Attack (Duplicate Payment Fraud)</h2>
+<div class="warning-box">
+    <div class="warning-title">🎯 Hacker ka Plan:</div>
+    Hacker ciphertext badalta nahi hai. Wo wahi valid ₹500 wala packet capture karke server par <b>10 baar spam</b> karta hai taaki Sundram ke account se 10 baar paise cut jayein!
+</div>
+
+<h3>🧪 Chaos Simulator Code (`BridgeController.java` Line 76-97):</h3>
+<pre><code>@PostMapping("/attack/replay")
+public ResponseEntity<Map<String, Object>> attackReplay() {
+    String sampleCiphertext = "replay-attack-sample-data";
+    String packetId = computeSha256(sampleCiphertext);
+
+    // Pehle hi Redis me claim kar diya taaki packet duplicate ban jaye!
+    idempotencyService.claim(packetId);
+
+    MeshPacket packet = MeshPacket.builder().packetId(packetId)...build();
+    TransactionLedger result = ingestionService.ingest(packet);
+    return ResponseEntity.ok(Map.of(
+            "status", result.getStatus().name(), // ➔ "DUPLICATE"
+            "message", "Stage-3 Redis Lock: Duplicate packet blocked by Redis SETNX"
+    ));
+}</code></pre>
+
+<h3>🛡️ Hamara Defense:</h3>
+<ul>
+    <li><b>Stage-3 Redis <code>SETNX</code> Lock (25h TTL):</b> Pehle packet par key set hui `zeromesh:packet:<id>` = `PROCESSING`. Jab duplicate packet 0.1ms baad aaya, Redis ne `SETNX` par **`false` (0)** return kiya. Gateway ne use Kafka ke aane se pehle hi drop kar diya!</li>
+    <li><b>PostgreSQL Tier-2 Defense:</b> Agar Kafka lag se consumer tak message dobara gaya, toh database ke <code>packet_id UNIQUE</code> constraint par duplicate pakda jayega. Extra transfer: **₹0.00**!</li>
+</ul>
+
+<div class="page-break"></div>
+
+<h2>2.3. ⏰ Attack #3: Zombie / Delay Attack (Expired Packets)</h2>
+<div class="story-box">
+    <div class="story-title">🎯 Hacker ka Plan:</div>
+    Hacker ek valid transaction packet ko apne phone me save karke baith jata hai. 2 din baad (jab Sundram bhool chuka ho), wo packet ko bank server par flush karta hai!
+</div>
+
+<h3>🧪 Chaos Simulator Code (`BridgeController.java` Line 100-114):</h3>
+<pre><code>@PostMapping("/attack/expired")
+public ResponseEntity<Map<String, Object>> attackExpired() {
+    MeshPacket packet = MeshPacket.builder()
+            .packetId("EXPIRED-PACKET-" + System.currentTimeMillis())
+            .ttl(5)
+            .createdAt(1000000000000L) // 👈 Year 2001 timestamp (24h validity window se bohot purana!)
+            .payload(...)
+            .build();
+
+    TransactionLedger result = ingestionService.ingest(packet);
+    return ResponseEntity.ok(Map.of(
+            "status", result.getStatus().name(), // ➔ "EXPIRED"
+            "message", "Stage-1 Expiry Check: Packet age exceeded 24-hour validity window"
+    ));
+}</code></pre>
+
+<h3>🛡️ Hamara Defense:</h3>
+<ul>
+    <li><b>Stage-1 Temporal Expiry Check:</b> <code>if (System.currentTimeMillis() - packet.getCreatedAt() > 24 Hours)</code> ➔ Gateway use 1 millisecond me reject kar deta hai as <b><code>EXPIRED</code></b>. Stale payments bank me ghus hi nahi sakti!</li>
+</ul>
+
+<h2>2.4. 🌪️ Attack #4: Sybil & Broadcast Storm Denial-of-Service (DoS)</h2>
+<div class="danger-box">
+    <div class="danger-title">🎯 Hacker ka Plan:</div>
+    Hacker metro ke andar ek rogue device chalata hai jo 1 second me 1,00,000 nakli packets Bluetooth par blast karta hai taaki sabhi phones ki battery drain ho jaye aur network crash ho jaye!
+</div>
+
+<h3>🛡️ Hamara Defense:</h3>
+<ul>
+    <li><b><code>TTL = 5</code> Hop Decay:</b> Har jump par TTL minus hota hai (5 ➔ 4 ➔ 3 ➔ 2 ➔ 1 ➔ 0). Jaise hi `TTL == 0`, phone forwarding rok deta hai. Koi packet infinite loop me nahi ghoom sakta!</li>
+    <li><b>Fast-Fail Ingestion Gateway:</b> Gateway Stage 1 aur Stage 2 par in-memory RAM me 2ms ke andar nakli packets ko drop kar deta hai. Heavy Kafka aur Postgres tables tak garbage pahunchta hi nahi hai!</li>
+</ul>
+
+<h2>2.5. 🏃 Attack #5: Multi-Bridge Concurrent Flush Race Condition (Dave vs Bob)</h2>
+<div class="story-box">
+    <div class="story-title">🎯 The Subway Exit Race:</div>
+    Sundram ka ek hi payment packet metro mesh me Bob aur Dave dono ke phones par relay hua tha. Dono alag-alag escalators se nikal kar theek usi millisecond me <code>POST /api/v1/mesh/flush</code> call karte hain!
+</div>
+
+<h3>🛡️ Hamara Defense:</h3>
+<ul>
+    <li>Dono Gateway instances ek hi **Shared Redis Cluster** se judte hain.</li>
+    <li>Redis ka **`SETNX` atomic single-threaded operation** hai:
+        <ul>
+            <li>Dave ki request 1 nanosecond pehle pahunchi: Redis returns <b>`1` (True)</b> ➔ Proceed to settle.</li>
+            <li>Bob ki request 1 nanosecond baad aayi: Redis returns <b>`0` (False)</b> ➔ Drop as <code>DUPLICATE</code>!</li>
+        </ul>
+    </li>
+    <li>Single payment hi process hoti hai, zero double-debiting!</li>
+</ul>
+
+<hr class="divider">
+
+<!-- SECTION 3 -->
+<h1>3. Deep Architectural Clarifications (Sundram's Killer Doubts)</h1>
+
+<h2>3.1. Kya Settlement Service Redis me Deduplication Check karti hai?</h2>
+<div class="warning-box">
+    <div class="warning-title">⚠️ The Absolute Architectural Truth:</div>
+    <b>NAHI! Settlement Consumer Redis me Deduplication Check NAHI lagata!</b><br>
+    • <b>Deduplication ka poora kaam:</b> Ingestion Gateway + Redis <code>SETNX (claim)</code> sambhalta hai.<br>
+    • <b>Settlement Service ka kaam:</b> Settlement Service duplicate rokne ke liye <b>PostgreSQL Database</b> use karti hai (<code>transaction_ledger</code> table ka <code>packet_id UNIQUE</code> constraint).<br>
+    • <b>Settlement Redis me sirf Status Update karti hai:</b>
+    <ul>
+        <li>Payment success hone par: <code>idempotencyService.markSettled(packetId)</code> (Status ko "PROCESSING" se "SETTLED" karti hai).</li>
+        <li>Payment fail hone par: <code>idempotencyService.release(packetId)</code> (Lock release karti hai).</li>
+    </ul>
+</div>
+
+<h2>3.2. Redis Lock Key ka Format kya hota hai?</h2>
+<p>Hamare code (`IdempotencyService.java`) me key exact <code>packetId</code> ke base par banti hai:</p>
+<pre><code>KEY:   zeromesh:packet:SR6m2yJaZd7fSI3IjQyM...
+VALUE: "PROCESSING" (later updated to "SETTLED")
+TTL:   25 Hours (90,000 Seconds = 24h window + 1h safety buffer)</code></pre>
+
+<div class="page-break"></div>
+
+<h2>3.3. 1 Million (10 Lakh) Nakli Packets Attack ka 4-Layer Defense</h2>
+<p>Agar hacker 10 Lakh nakli packets banaye jinki <code>packetId</code> alag-alag ho, toh kya wo Redis aur Kafka ko choke kar denge? <b>Nahi, system use 4 layers me kaat deta hai:</b></p>
+
+<div class="diagram-box">1,00,000 Fake Packets Injected by Hacker
+      │
+      ▼
+┌──────────────────────────┐
+│ LAYER 1: BLE Physical    │ ──> Bluetooth radio bandwidth (1-2 Mbps) saturates;
+│ Radio Horizon            │     90% packets dropped over the air. TTL=5 kills propagation.
+└─────────────┬────────────┘
+              │ 10,000 survive
+              ▼
+┌──────────────────────────┐
+│ LAYER 2: Stage-2 Gateway │ ──> Random hash packets mismatch calculated SHA-256;
+│ In-Memory SHA-256 Check  │     Dropped in 0.001ms RAM BEFORE touching Redis or Kafka!
+└─────────────┬────────────┘
+              │ (Even if hacker computed valid hashes)
+              ▼
+┌──────────────────────────┐
+│ LAYER 3: API Gateway     │ ──> Rate limiter detects flush flood;
+│ HTTP 429 Rate Limiter    │     Throws HTTP 429 Too Many Requests, blocking batch upload.
+└─────────────┬────────────┘
+              │ (Worst Case: 5,000 enter Kafka)
+              ▼
+┌──────────────────────────┐
+│ LAYER 4: Settlement      │ ──> AES-256-GCM GMAC tag fails during decryption (AEADBadTagException);
+│ Decryption Fast-Fail     │     Dropped in CPU memory WITHOUT touching DB row locks or balances!
+└──────────────────────────┘</div>
+
+<h2>3.4. `TTL = 5` Hop Concept Deep-Dive</h2>
+<ul>
+    <li><b>Hop kya hai?</b> Ek phone se doosre phone par Bluetooth se packet ka jump karna = 1 Hop.</li>
+    <li><b>TTL kya hai?</b> TTL koi second ya minute nahi hai. Ye ek <b>Hop Countdown Counter</b> hai!</li>
+    <li><b>Countdown:</b> <code>Sundram (TTL=5) ➔ Bob (TTL=4) ➔ Charlie (TTL=3) ➔ Dave (TTL=2) ➔ P5 (TTL=1) ➔ P6 (TTL=0 🛑 STOP)</code>.</li>
+    <li><b>Kyu zaroori hai?</b> Agar limit na ho, toh packet metro ke 500 phones ke beech gol-gol ghoomta rahega (Broadcast Storm), saare phones ubalne lagenge aur battery 0% ho jayegi!</li>
+    <li><b>5 Hops hi kyu?</b> Bluetooth range $\approx 10\text{m}$. $5 \text{ hops} \times 10\text{m} = \mathbf{50\text{ Meters}}$. Ek metro coach ya platform 40-50m ka hota hai. 5 jumps me packet train ke andar se escalator/exit gate tak aaraam se pahunch jata hai!</li>
+</ul>
+
+<h2>3.5. Single Hop me 50 Devices Broadcast (Omnidirectional Radio Waves)</h2>
+<ul>
+    <li><b>Radio Broadcast:</b> Bluetooth koi taar (wire) nahi hai. 10 meter ke daayre me khade **50 ke 50 phones ke Bluetooth chip ko packet sunai deta hai!**</li>
+    <li><b>RF Collision rokne ke 3 Rules:</b>
+        <ul>
+            <li><b>1. Random Jitter (20-80ms delay):</b> Har phone thoda ruk kar aage fekta hai taaki radio signals aapas me na takrayein.</li>
+            <li><b>2. Duplicate Suppression:</b> Agar Phone 5 dekhta hai ki bagal wale Phone 2 ne wahi packet pehle bol diya, toh Phone 5 apna broadcast cancel kar deta hai.</li>
+            <li><b>3. Low Battery Awareness:</b> 20% se kam battery wale phones relay mode disable kar dete hain taaki unki battery bachi rahe.</li>
+        </ul>
+    </li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SECTION 4 -->
+<h1>4. Day 4 Mock Interview Repertoire (Ready English Scripts)</h1>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 1: Tamper Protection & Dual-Layer Validation</div>
+    <div class="interview-q">"What prevents an attacker sniffing intermediate Bluetooth hops from modifying the payment amount from ₹500 to ₹5,000?"</div>
+    <div class="interview-ans">
+        "Sir, ZeroMesh-UPI provides mathematically unbreakable dual-layer tamper protection:<br><br>
+        First, at <b>Stage 2 of the Ingestion Gateway</b>, the server independently recalculates <code>SHA-256(ciphertext)</code> against the asserted <code>packetId</code> barcode in RAM. If an attacker modified any byte of the payload, the checksum mismatches and the packet is dropped within 2ms as <code>TAMPERED</code> without acquiring Redis locks or publishing to Kafka.<br><br>
+        Second, even if an attacker recomputed both the ciphertext and <code>packetId</code>, the underlying transaction data is sealed using <b>AES-256-GCM</b>. GCM generates an authenticated 128-bit GMAC tag. During settlement decryption, any bit modification causes <code>aes.doFinal()</code> to immediately throw an <code>AEADBadTagException</code>, discarding the packet with zero database balance alterations."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 2: Replay Attack Defense & Two-Tier Deduplication</div>
+    <div class="interview-q">"What happens if an attacker captures a valid ₹500 payment packet and broadcasts it 50 times across different bridge nodes?"</div>
+    <div class="interview-ans">
+        "Sir, we implement a strict <b>Two-Tier Deduplication Architecture</b>:<br><br>
+        At Tier 1 (Ingestion Gateway), the first arriving packet executes an atomic <code>SETNX zeromesh:packet:&lt;id&gt; PROCESSING EX 90000</code> in Redis. When the 49 duplicate replay attempts hit our gateway instances, Redis returns <code>false</code> within sub-millisecond latency, rejecting all 49 copies as <code>DUPLICATE</code> before they can touch Kafka.<br><br>
+        At Tier 2 (Core Banking), the PostgreSQL <code>transaction_ledger</code> table enforces a database-level <code>UNIQUE constraint on packet_id</code>. Even in the theoretical case of a Kafka redelivery, the relational database blocks duplicate ledger insertion, guaranteeing ₹0.00 duplicate money transfer."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 3: Mesh Broadcast Storm & Battery Exhaustion</div>
+    <div class="interview-q">"How does your peer-to-peer gossip protocol prevent broadcast storms and rapid battery drain across dense mobile crowds?"</div>
+    <div class="interview-ans">
+        "Sir, we mitigate mesh congestion through three cooperative mechanisms:<br><br>
+        1. <b>TTL=5 Hop Decay:</b> Every intermediate peer decrements the packet's TTL counter. Upon reaching TTL=0, forwarding ceases immediately, strictly capping packet propagation to a 50-meter radius.<br><br>
+        2. <b>Random Jitter Delay (20-80ms):</b> Peers introduce random transmission backoffs to prevent RF packet collision across simultaneous BLE broadcasts.<br><br>
+        3. <b>Duplicate Relay Suppression & Battery Gating:</b> Nodes maintain in-memory LRU caches of seen `packetIds`. If an identical packet is overheard nearby, retransmission is suppressed, while devices below 20% battery automatically opt out of active relaying."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 4: Large-Scale DoS Flooding Defense</div>
+    <div class="interview-q">"What happens if a rogue actor floods your ingestion service with 1 million distinct synthetic packets?"</div>
+    <div class="interview-ans">
+        "Sir, our system defends in depth across four decoupled architectural boundaries:<br><br>
+        Packets with forged hashes fail Stage-2 SHA-256 validation in sub-millisecond CPU memory without touching Redis or Kafka. Legitimate batch floods are throttled at the API Gateway via HTTP 429 rate limiting. Finally, any surviving malformed payloads that enter Kafka are dropped during settlement at the AES-GCM decryption step via `AEADBadTagException`, safely discarding the garbage without ever locking database rows or mutating account balances."
+    </div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION 5 -->
+<h1>5. Day 4 Quick Revision & Threat-Matrix (Cheat Sheet)</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Attack Vector</th>
+            <th>Attacker Strategy</th>
+            <th>Primary Defense Mechanism</th>
+            <th>Secondary Safety Net</th>
+            <th>Terminal Outcome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Data Tampering</b></td>
+            <td>Modifying ciphertext (₹500 ➔ ₹5,000)</td>
+            <td>Stage-2 SHA-256 Checksum in Gateway</td>
+            <td>AES-256-GCM 128-bit GMAC Tag in Settlement</td>
+            <td>Status: <code>TAMPERED</code></td>
+        </tr>
+        <tr>
+            <td><b>Replay Attack</b></td>
+            <td>Spamming same valid packet 50 times</td>
+            <td>Stage-3 Redis <code>SETNX</code> Lock (25h TTL)</td>
+            <td>PostgreSQL <code>packet_id UNIQUE</code> Constraint</td>
+            <td>Status: <code>DUPLICATE</code></td>
+        </tr>
+        <tr>
+            <td><b>Zombie Delay</b></td>
+            <td>Re-submitting 2-day-old captured packet</td>
+            <td>Stage-1 Temporal Expiry Check (<code>&gt; 24h</code>)</td>
+            <td>Redis TTL auto-eviction (25h)</td>
+            <td>Status: <code>EXPIRED</code></td>
+        </tr>
+        <tr>
+            <td><b>Broadcast Storm</b></td>
+            <td>Infinite packet looping in subway crowd</td>
+            <td><code>TTL = 5</code> Hop Decay (Stop at TTL=0)</td>
+            <td>Random transmission jitter + duplicate suppression</td>
+            <td>Propagation stops within 50m</td>
+        </tr>
+        <tr>
+            <td><b>Multi-Bridge Race</b></td>
+            <td>Dave and Bob flushing same packet simultaneously</td>
+            <td>Redis Atomic Single-Threaded <code>SETNX</code> Mutex</td>
+            <td>PostgreSQL Transactional Isolation</td>
+            <td>First = <code>SETTLED</code>, Second = <code>DUPLICATE</code></td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; color: #94a3b8; font-size: 8.5pt; margin-top: 24px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+    ZeroMesh-UPI • Comprehensive Interview Prep Guide • Compiled for Sundram Singhal • Day 4 Complete
+</div>
+
+</body>
+</html>

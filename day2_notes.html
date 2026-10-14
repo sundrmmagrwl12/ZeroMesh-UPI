@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>ZeroMesh-UPI — Day 2 Master Study Notes</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+    @page {
+        size: A4;
+        margin: 14mm 14mm 16mm 14mm;
+        @bottom-right {
+            content: "ZeroMesh-UPI • Day 2 • Page " counter(page);
+            font-family: 'Inter', sans-serif;
+            font-size: 8.5pt;
+            color: #94a3b8;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: #0f172a;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Card */
+    .header-card {
+        background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #0f172a 100%);
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .badge-day {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.25);
+        color: #c7d2fe;
+        border: 1px solid rgba(165, 180, 252, 0.35);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .header-title {
+        font-size: 20pt;
+        font-weight: 900;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+    .header-sub {
+        font-size: 10.5pt;
+        color: #94a3b8;
+        margin: 0 0 14px 0;
+    }
+    .meta-bar {
+        display: flex;
+        gap: 20px;
+        font-size: 8.5pt;
+        color: #cbd5e1;
+        border-top: 1px solid rgba(255,255,255,0.14);
+        padding-top: 10px;
+    }
+    .meta-bar b { color: #38bdf8; }
+
+    /* Headings */
+    h1 {
+        font-size: 13.5pt;
+        font-weight: 800;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 6px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+    h2 {
+        font-size: 11pt;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+    }
+    h3 {
+        font-size: 10pt;
+        font-weight: 600;
+        color: #334155;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        page-break-after: avoid;
+    }
+
+    p { margin: 0 0 10px 0; }
+    b { color: #0f172a; }
+
+    /* Callout Boxes */
+    .story-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #6366f1;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .story-title {
+        font-weight: 700;
+        color: #4338ca;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
+
+    .warning-box {
+        background: #fffbeb;
+        border: 1px solid #fef3c7;
+        border-left: 4px solid #f59e0b;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .warning-title {
+        font-weight: 700;
+        color: #b45309;
+        margin-bottom: 4px;
+    }
+
+    .danger-box {
+        background: #fef2f2;
+        border: 1px solid #fee2e2;
+        border-left: 4px solid #ef4444;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .danger-title {
+        font-weight: 700;
+        color: #b91c1c;
+        margin-bottom: 4px;
+    }
+
+    .interview-box {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-left: 4px solid #10b981;
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+        margin: 14px 0;
+        page-break-inside: avoid;
+    }
+    .interview-title {
+        font-weight: 800;
+        color: #047857;
+        font-size: 9.5pt;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+    }
+    .interview-q {
+        font-weight: 700;
+        color: #065f46;
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+    .interview-ans {
+        font-size: 9.5pt;
+        color: #0f172a;
+        line-height: 1.5;
+    }
+
+    /* Code Blocks */
+    pre, code {
+        font-family: 'Fira Code', Consolas, Monaco, monospace;
+    }
+    code {
+        background: #f1f5f9;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 8.5pt;
+    }
+    pre {
+        background: #090d16;
+        color: #f8fafc;
+        border: 1px solid #1e293b;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 8.5pt;
+        line-height: 1.45;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0 16px 0;
+        font-size: 9pt;
+        page-break-inside: avoid;
+    }
+    th {
+        background: #f1f5f9;
+        color: #0f172a;
+        font-weight: 700;
+        text-align: left;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+    }
+    td {
+        padding: 8px 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    /* ASCII Diagrams */
+    .diagram-box {
+        background: #090d16;
+        color: #38bdf8;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'Fira Code', monospace;
+        font-size: 8pt;
+        line-height: 1.35;
+        white-space: pre;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid #e2e8f0;
+        margin: 18px 0;
+    }
+
+    ul, ol {
+        margin: 4px 0 10px 0;
+        padding-left: 22px;
+    }
+    li { margin-bottom: 4px; }
+
+    .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- Header Card -->
+<div class="header-card">
+    <div class="badge-day">Day 2 of 8 — Master Study Notes (Clean Edition)</div>
+    <div class="header-title">⚡ ZeroMesh-UPI: Project Structure, Lifecycle & Kafka KRaft Deep-Dive</div>
+    <div class="header-sub">Complete Codebase Post-Mortem, Auto Demo E2E Trace, Partitions & Modulo Math, Two-Tier Idempotency & DLT</div>
+    <div class="meta-bar">
+        <div><b>Candidate:</b> Sundram Singhal</div>
+        <div><b>Format:</b> Hinglish Conceptual Core + Ready-to-Speak English Scripts</div>
+        <div><b>Target Role:</b> Java Backend Developer / SDE-1</div>
+    </div>
+</div>
+
+<!-- SECTION 1 -->
+<h1>1. Microservices Architecture & Complete Folder Structure</h1>
+
+<p>ZeroMesh-UPI ko ek single Monolith na bana kar humne <b>Maven Multi-Module Microservices Architecture</b> me divide kiya hai:</p>
+
+<div class="diagram-box">ZeroMesh-UPI (Parent Root POM)
+ ├── 📦 common-mesh-dto     ──> Shared Contract Library (Models, DTOs, Enums, Exceptions)
+ ├── 🚀 ingestion-service   ──> Port 8080 (Edge Gateway, Redis SETNX, Mesh Simulator, Cyber UI)
+ └── 🏦 settlement-service  ──> Port 8081 (Core Banking Engine, Kafka Consumer, Postgres ACID DB)</div>
+
+<h2>1.1. Proofs that ZeroMesh-UPI is a True Microservices Architecture</h2>
+<ul>
+    <li><b>Independent Deployability:</b> <code>ingestion-service</code> aur <code>settlement-service</code> dono ke paas apna alag <code>pom.xml</code>, apna alag Spring Boot <code>main()</code> class, aur alag <code>Dockerfile</code> hai. Dono ko independent containers me alag-alag scale kiya ja sakta hai.</li>
+    <li><b>Asynchronous Event-Driven Decoupling:</b> Ingestion Service kabhi bhi Settlement Service ko direct synchronous HTTP REST se call nahi karti. Beech me <b>Apache Kafka</b> event backbone baitha hai.</li>
+    <li><b>Fault Isolation:</b> Agar Bank ka PostgreSQL database ya Settlement Service down bhi ho jaye, tab bhi Ingestion Gateway 2ms me Dave ke offline packets accept karke Kafka me safely buffer karta rahega. Zero Data Loss!</li>
+    <li><b>Shared Canonical Data Model:</b> <code>common-mesh-dto</code> shared library ki tarah kaam karta hai taaki dono services ek hi packet specification samajh sakein.</li>
+</ul>
+
+<h2>1.2. Complete Directory Tree & File-by-File Post-Mortem</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Module & File Path</th>
+            <th>Role in System</th>
+            <th>Production Responsibility / Logic</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b><code>pom.xml</code> (Parent)</b></td>
+            <td>Master Dependency Manager</td>
+            <td>Java 17, Spring Boot 3.2.3, Kafka, Redis, aur PostgreSQL versions ko teeno modules me coordinate karta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>docker-compose.yml</code></b></td>
+            <td>Container Orchestration</td>
+            <td>Kafka Broker (KRaft mode, Port 9092), Redis (6379), PostgreSQL (5432) aur Spring Boot services ko spin up karta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>common-mesh-dto/MeshPacket.java</code></b></td>
+            <td>The Envelope (Header)</td>
+            <td>Bluetooth par travel karne wala public object: <code>packetId</code> (SHA-256), <code>ttl</code> (5 jumps), <code>createdAt</code>.</td>
+        </tr>
+        <tr>
+            <td><b><code>common-mesh-dto/EncryptedPayloadDto.java</code></b></td>
+            <td>The Vault (Sealed Data)</td>
+            <td>Lifafe ke andar band tijori: <code>encryptedKey</code> (RSA-2048 locked), <code>iv</code> (12-byte salt), <code>ciphertext</code> (AES-256 locked).</td>
+        </tr>
+        <tr>
+            <td><b><code>common-mesh-dto/Account.java</code></b></td>
+            <td>User Account JPA Entity</td>
+            <td>Table <code>accounts</code> blueprint: <code>balance</code> ke sath <code>@Version private Long version;</code> laga hai (Optimistic Concurrency Control).</td>
+        </tr>
+        <tr>
+            <td><b><code>common-mesh-dto/TransactionLedger.java</code></b></td>
+            <td>Audit Passbook Entity</td>
+            <td>Immutable bank log: Status enums (<code>SETTLED</code>, <code>DUPLICATE</code>, <code>TAMPERED</code>, <code>INVALID_ACCOUNT</code>, <code>INSUFFICIENT_FUNDS</code>).</td>
+        </tr>
+        <tr>
+            <td><b><code>ingestion-service/BridgeController.java</code></b></td>
+            <td>Edge Flush REST Endpoint</td>
+            <td><code>POST /api/v1/mesh/flush</code> — Jab Dave metro se nikal kar 4G pakadta hai, ye endpoint batch upload receive karta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>ingestion-service/MeshController.java</code></b></td>
+            <td>Offline Injection Endpoint</td>
+            <td><code>POST /api/v1/mesh/inject</code> — Subway ke andar Alice/Sundram ka payment packet generate karke encrypt karta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>ingestion-service/BridgeIngestionService.java</code></b></td>
+            <td>4-Stage Pipeline Orchestrator</td>
+            <td>Dave ke packets ko Stage 1 (Expiry), Stage 2 (SHA-256), Stage 3 (Redis SETNX) se pass karke Kafka Producer ko deta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>ingestion-service/PacketValidationService.java</code></b></td>
+            <td>Integrity & Expiry Gatekeeper</td>
+            <td>Check karta hai: <code>age > 24h</code> (Expired) aur <code>SHA-256(ciphertext) != packetId</code> (Tampered).</td>
+        </tr>
+        <tr>
+            <td><b><code>ingestion-service/IdempotencyService.java</code></b></td>
+            <td>Distributed Lock Service</td>
+            <td>Redis command: <code>SETNX zeromesh:packet:<id> PROCESSING EX 90000</code> (25h TTL). Multi-bridge race condition yahin drop hoti hai!</td>
+        </tr>
+        <tr>
+            <td><b><code>ingestion-service/SettlementEventProducer.java</code></b></td>
+            <td>Kafka Publisher</td>
+            <td><code>kafkaTemplate.send()</code> call karke packet ko topic <code>mesh-payment-settlements</code> me daalta hai aur 600ms me ACK leta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>ingestion-service/MeshSimulatorService.java</code></b></td>
+            <td>Bluetooth Gossip Engine</td>
+            <td>Phone A ➔ Phone B ➔ Dave tak memory graph simulation chalata hai aur har jump par <code>TTL</code> decay karta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>settlement-service/SettlementEventConsumer.java</code></b></td>
+            <td>Core Banking Listener</td>
+            <td><code>@KafkaListener</code> — Kafka se packet uthata hai, RSA private key se decrypt karta hai, Postgres me atomic balance update karta hai.</td>
+        </tr>
+        <tr>
+            <td><b><code>settlement-service/CryptoService.java</code></b></td>
+            <td>Decryption Engine</td>
+            <td>Bank ki RSA-2048 Private Key se AES key nikaalta hai, fir AES-256-GCM se actual payment instruction decrypt karta hai.</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<!-- SECTION 2 -->
+<h1>2. "Auto Demo" End-to-End Execution Trace (Under the Hood)</h1>
+
+<p>Jab UI par <b>"▶ Auto Demo"</b> button dabaya jata hai, toh system me ye 5-Step Symphony chalti hai:</p>
+
+<div class="diagram-box">[ BROWSER UI ]
+     │
+     │ 1. POST /api/v1/mesh/inject (Alice ke phone me sealed packet bana)
+     ▼
+[ INGESTION-SERVICE (Port 8080) ] ──> RSA-2048 + AES-256 Encrypt
+     │
+     │ 2. POST /api/v1/mesh/gossip (Bluetooth Mesh Jump: Alice ➔ Bob ➔ Dave)
+     ▼
+[ MESH SIMULATOR ] ──> TTL decays: 5 ➔ 4 ➔ 3
+     │
+     │ 3. POST /api/v1/mesh/flush (Dave bahar nikla, Bridge upload)
+     ▼
+[ 4-STAGE PIPELINE ]
+     ├── Stage 1: Expiry Check (24h)
+     ├── Stage 2: Integrity SHA-256 Check
+     ├── Stage 3: Redis SETNX Idempotency Lock (25h TTL)
+     └── Stage 4: Kafka Producer ──> pushes to Topic 'mesh-payment-settlements'
+                                            │
+                                            ▼ (Asynchronous Kafka Broker)
+[ SETTLEMENT-SERVICE (Port 8081) ] <────────┘
+     │
+     │ 4. @KafkaListener Consumes Message
+     ├── RSA Private Key se AES Key kholi
+     ├── AES-GCM se Payment Data decrypt kiya: Sundram ➔ Rahul ₹500
+     ├── PostgreSQL me Sundram (₹2000 ➔ ₹1500) & Rahul (₹1000 ➔ ₹1500)
+     ├── JPA @Version Check (No collision)
+     └── Ledger Table me Status = SETTLED (Redis key updated to SETTLED)
+     │
+     │ 5. Browser Polls: GET /api/v1/accounts/balances & /ledger
+     ▼
+[ UI UPDATES ] ──> Sundram ₹1500, Rahul ₹1500, Terminal me Green Log: "SETTLED"</div>
+
+<hr class="divider">
+
+<!-- SECTION 3 -->
+<h1>3. Apache Kafka KRaft Deep-Dive</h1>
+
+<h2>3.1. Subway Rush Hour Problem (Kafka Kyu Lagaya?)</h2>
+<div class="story-box">
+    <div class="story-title">🚇 Rajiv Chowk 6:00 PM Scenario:</div>
+    Metro subway train platform par aati hai. 500 passengers ke phones ek sath 5G network catch karte hain! 1 second ke andar <b>2,000 payment packets</b> server par flood hote hain.<br><br>
+    <b>Agar Kafka NAHI hota (Direct Database Call):</b><br>
+    PostgreSQL ka HikariCP connection pool (50-100 connections) 1 second me exhaust ho jata. Tomcat ke worker threads block ho jaate (Thread Starvation), aur server Dave ke phone ko <code>HTTP 504 Gateway Timeout</code> phenk deta. Payments drop ho jaati!<br><br>
+    <b>Kafka as Shock Absorber (Halwai & Cash Counter Analogy):</b><br>
+    Ingestion Gateway (Cash Counter) 2 millisecond me packet Kafka topic me daal kar Dave ko <code>HTTP 200 OK</code> de deta hai. Settlement Engine (Halwai) parde ke peeche apni safe capacity (jaise 500 TPS) par aaram se DB likhta rehta hai. Zero connection exhaustion, zero dropped payments!
+</div>
+
+<h2>3.2. KRaft Mode (No ZooKeeper — Modern Kafka 3.x+)</h2>
+<p>Pehle Kafka chalane ke liye ek alag software (Apache ZooKeeper) lagta tha jo cluster metadata aur leader election manage karta tha. Isse 2 alag systems maintain karne padte the aur ZooKeeper failover slow hota tha.</p>
+<p>Hamare <code>docker-compose.yml</code> me humne <b><code>KAFKA_ENABLE_KRAFT: 'yes'</code></b> configure kiya hai:</p>
+<ul>
+    <li><b>Single Binary:</b> ZooKeeper container ko hamesha ke liye hata diya gaya hai.</li>
+    <li><b>Raft Consensus Protocol:</b> Kafka brokers aapas me Raft algorithm se direct leader chun lete hain.</li>
+    <li><b>Sub-second Startup:</b> Milliseconds me cluster ready ho jata hai aur partitions scale hote hain.</li>
+</ul>
+
+<h2>3.3. What is a Kafka Broker?</h2>
+<p><b>Kafka Broker = Ek individual server process (machine)</b> jo messages receive karta hai, unhe disk par commit log me append karta hai, aur consumers ko serve karta hai.</p>
+<ul>
+    <li>Hamare Docker setup me port <code>9092</code> par chalne wala container hi <b>Broker 1 (Node 1)</b> hai.</li>
+    <li>Topic sirf ek logical naam hai. Messages asal me <b>Broker ke hard drive</b> par folder me save hote hain (e.g., <code>/var/lib/kafka/data/mesh-payment-settlements-0/</code>).</li>
+    <li>Production me hum 3 Brokers chalate hain taaki ek server crash hone par baaki do survive karein (High Availability).</li>
+</ul>
+
+<div class="page-break"></div>
+
+<h2>3.4. Partitions, Hash Key, aur `%` Modulo Math (The Sequencing Bug)</h2>
+<p>Hamare topic <code>mesh-payment-settlements</code> me <b>3 Partitions</b> hain. Jab Ingestion Service message publish karti hai, toh wo <b>Sender UPI ID</b> (jaise <code>"sundram@upi"</code>) ko Message Key banakar bhejti hai:</p>
+
+<pre><code>kafkaTemplate.send("mesh-payment-settlements", packet.getPacketId(), payload);</code></pre>
+
+<h3>🧮 Kafka ka Default Partitioner Formula:</h3>
+<p style="text-align: center; font-size: 10.5pt; font-weight: 700; color: #0284c7; background: #f0f9ff; padding: 8px; border-radius: 6px; border: 1px solid #bae6fd;">
+Partition Number = Math.abs( MurmurHash2( key ) ) % Total Partitions
+</p>
+
+<ul>
+    <li>MurmurHash2(<code>"sundram@upi"</code>) = <code>1042783</code>.</li>
+    <li><code>1042783 % 3 = 1</code> ➔ Sundram ke saare packets <b>HAMESHA Partition 1</b> par hi jayenge!</li>
+</ul>
+
+<div class="danger-box">
+    <div class="danger-title">☠️ Out-of-Order Execution Disaster (Agar Hash Key Na Hoti):</div>
+    Socho Sundram ke account me abhi sirf <b>₹1,000</b> hain.<br>
+    • <b>Txn 1 (12:00:00 PM):</b> Salary Credit = <b>+₹5,000</b> (Balance hona chahiye: ₹6,000).<br>
+    • <b>Txn 2 (12:00:01 PM):</b> Phone Purchase = <b>-₹4,000</b>.<br><br>
+    Agar dono packets alag-alag partitions par chale gaye (Txn 1 ➔ Part 0, Txn 2 ➔ Part 1):<br>
+    Consumer 2 fast tha, usne Partition 1 se Txn 2 pehle utha liya! Usne dekha: Sundram ka balance sirf ₹1,000 hai aur khareedna ₹4,000 ka phone hai. Usne transaction <b>`INSUFFICIENT_FUNDS` bolkar reject kar diya!</b><br>
+    Uske baad Txn 1 credit hua. Sundram ka payment valid hote hue bhi fail ho gaya!
+</div>
+
+<p><b>🏆 The Golden Rule:</b> <i>"Kafka guarantees message ordering ONLY within a single partition, never across multiple partitions!"</i> Same partition me hone ki wajah se packets strictly <b>FIFO (First-In, First-Out)</b> order me settle hote hain.</p>
+
+<h2>3.5. Consumer Groups & Partition Assignment Rules</h2>
+<p>Hamari consumer service <code>zeromesh-settlement-group</code> me register hoti hai:</p>
+<pre><code>@KafkaListener(topics = "mesh-payment-settlements", groupId = "zeromesh-settlement-group")</code></pre>
+
+<table>
+    <thead>
+        <tr>
+            <th>Active Consumers</th>
+            <th>Partition Allocation (3 Partitions)</th>
+            <th>System Behavior</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>1 Consumer (Current Demo)</b></td>
+            <td>Partitions 0, 1, 2 akela padhta hai</td>
+            <td>Sequential processing across partitions. Memory-optimized for single container.</td>
+        </tr>
+        <tr>
+            <td><b>3 Consumers (Production Scale)</b></td>
+            <td>Consumer 1 ➔ Part 0, Consumer 2 ➔ Part 1, Consumer 3 ➔ Part 2</td>
+            <td><b>Perfect 1:1 Parallelism! 3x Throughput</b> without a single line of code change!</td>
+        </tr>
+        <tr>
+            <td><b>4 Consumers</b></td>
+            <td>3 consumers ko 1-1 partition milegi, 4th consumer <b>IDLE (Khali)</b> baithega</td>
+            <td><b>Kafka Rule:</b> Ek partition ko ek consumer group ka sirf EK hi consumer padh sakta hai at any given time (race condition rokne ke liye).</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr class="divider">
+
+<!-- SECTION 4 -->
+<h1>4. Offsets, Delivery Semantics & Two-Tier Idempotency</h1>
+
+<h2>4.1. Kafka Offsets (Kitaab ka Bookmark 🔖)</h2>
+<p>Partition ke andar har message ka ek sequential number hota hai: <code>Offset 0, 1, 2, 3...</code>. Consumer jab message process kar leta hai, toh wo internal topic <b><code>__consumer_offsets</code></b> me apna bookmark commit karta hai.</p>
+
+<h2>4.2. Exactly-Once Processing Formula</h2>
+<p style="text-align: center; font-size: 10.5pt; font-weight: 700; color: #4338ca; background: #eef2ff; padding: 8px; border-radius: 6px; border: 1px solid #c7d2fe;">
+Exactly-Once Processing = Kafka At-Least-Once Delivery + Two-Tier Idempotency
+</p>
+
+<h2>4.3. The Two-Tier Deduplication Truth (Redis vs DB Roles)</h2>
+<div class="story-box">
+    <div class="story-title">🚪 Do Darwaazon ka Architecture:</div>
+    <ul>
+        <li><b>Tier 1: Ingestion Gateway (Port 8080 - Redis SETNX Gatekeeper):</b><br>
+        Dave jab packet flush karta hai, toh Redis par <code>SETNX zeromesh:packet:<id> PROCESSING EX 90000</code> lagta hai. Duplicate packets yahin 2ms me drop ho jaate hain aur <b>Kafka me kabhi enter hi nahi hote!</b></li>
+        <li><b>Tier 2: Settlement Consumer (Port 8081 - PostgreSQL Database Unique Constraint):</b><br>
+        <b>Kafka Consumer Redis me claim check NAHI karta!</b> Agar Kafka ke at-least-once network retry se duplicate message consumer tak aa jaye, toh <b>PostgreSQL <code>transaction_ledger</code> table ka <code>packet_id UNIQUE</code> constraint</b> use pakadta hai. Settle hone ke baad consumer Redis me bas status <code>idempotencyService.markSettled(packetId)</code> update karta hai.</li>
+    </ul>
+</div>
+
+<div class="page-break"></div>
+
+<h2>4.4. Producer ACKs (`acks = all`) & Idempotent Producer</h2>
+<p>Hamari <code>application.yml</code> me producer reliability configured hai:</p>
+<pre><code>spring:
+  kafka:
+    producer:
+      acks: all   # Leader + Saare In-Sync Replicas (ISR) se receipt maangna compulsory!</code></pre>
+
+<ul>
+    <li><b>Idempotent Producer (`enable.idempotence = true`):</b> Producer har TCP batch ke sath ek <b>Producer ID (PID)</b> aur monotonically increasing <b>Sequence Number</b> bhejta hai.</li>
+    <li><b>ACK Drop Retry Scenario:</b> Agar Broker ne message disk par likh liya lekin ACK raste me network drop ho gaya, Producer wahi sequence dobara bhejega. Broker dekhega ki ye sequence pehle se likha hai, toh <b>disk par dobara nahi likhega, par Producer ko SUCCESS ACK bhej dega!</b> Producer ko bina error ke receipt mil gayi aur disk par duplicate nahi bana!</li>
+</ul>
+
+<h2>4.5. Spring Boot Profile Inheritance (Why `acks: all` is in `application.yml`)</h2>
+<p>Spring Boot me <code>application.yml</code> base configuration hoti hai. <code>application-docker.yml</code> sirf child override hoti hai jisme sirf hostnames (jaise <code>kafka:9092</code>, <code>postgres:5432</code>) badalte hain. Saari core settings jaise <code>acks: all</code>, serializers, aur timeouts child profile me <b>automatically inherit</b> ho jaati hain (DRY Principle).</p>
+
+<h2>4.6. Consumer Lag & Dynamic Rebalancing</h2>
+<ul>
+    <li><b>Consumer Lag:</b> Produced Offset aur Consumed Offset ka gap. Agar lag badhta hai, toh consumer replicas badha kar throughput match kiya jata hai.</li>
+    <li><b>Rebalancing:</b> Agar ek consumer node crash ho jaye (heartbeat timeout), toh Kafka Group Coordinator orphan partition ko surviving consumers me re-assign kar deta hai. System bina ruke chalta rehta hai.</li>
+</ul>
+
+<hr class="divider">
+
+<!-- SECTION 5 -->
+<h1>5. Dead-Letter Topic (DLT) & Poison Pill Mitigation</h1>
+
+<p>Hamare code me <code>@RetryableTopic</code> laga hua hai:</p>
+<pre><code>@RetryableTopic(
+    attempts = "3",
+    backoff = @Backoff(delay = 1000, multiplier = 2),
+    autoCreateTopics = "true",
+    dltTopicSuffix = "-dlt"
+)
+@KafkaListener(topics = "mesh-payment-settlements", groupId = "zeromesh-settlement-group")</code></pre>
+
+<div class="warning-box">
+    <div class="warning-title">☠️ The Poison Pill & Head-of-Line Blocking Problem:</div>
+    Agar kisi corrupted/malformed packet ki wajah se consumer par unhandled exception aayi, aur hum retry karte rahein, toh consumer infinite loop me phas jayega. Ek kharab packet ki wajah se uske peeche khade 10,000 genuine packets ruk jayenge (Head-of-Line Blocking)!
+</div>
+
+<p><b>Hamara Solution:</b> Consumer exponential backoff ke sath <b>3 attempts</b> karta hai (1s ➔ 2s ➔ 4s). Agar teeno attempts fail ho jayein, toh message ko automatically <b>`mesh-payment-settlements-dlt` (Dead-Letter Topic)</b> me divert kar diya jata hai. Main partition free ho jata hai aur baaki saari payments aaram se process ho jaati hain!</p>
+
+<div class="page-break"></div>
+
+<!-- SECTION 6 -->
+<h1>6. Day 2 Mock Interview Repertoire (Ready English Scripts)</h1>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 1: Architectural Decoupling & Ingestion Bursts</div>
+    <div class="interview-q">"Why did you introduce Apache Kafka between Ingestion Gateway and Settlement Engine instead of a direct REST or database call?"</div>
+    <div class="interview-ans">
+        "Sir, we introduced Apache Kafka as an asynchronous shock absorber to prevent <b>cascading thread starvation and database connection pool exhaustion</b> during sudden traffic spikes.<br><br>
+        In our subway mesh environment, hundreds of offline devices simultaneously catch cellular network at station exits, generating bursts of thousands of concurrent bridge flush requests. If handled synchronously against PostgreSQL, our HikariCP connection pool would choke within seconds, triggering HTTP 504 timeouts and dropped transactions.<br><br>
+        Kafka decouples edge ingestion throughput (~2ms gateway response) from core banking settlement, allowing our consumer to drain transactions safely at a sustainable, rate-limited processing speed without upstream backpressure."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 2: Partitioning Strategy & Ordering Guarantees</div>
+    <div class="interview-q">"How did you design your Kafka partitioning strategy, and what happens if message keys are omitted?"</div>
+    <div class="interview-ans">
+        "Sir, Kafka guarantees strict FIFO ordering <b>only within an individual partition, never across partitions</b>. Our main topic is configured with 3 partitions, and we explicitly route messages using the sender's UPI ID as the <b>Message Key</b>.<br><br>
+        Under the hood, Kafka's <code>DefaultPartitioner</code> applies <code>Math.abs(MurmurHash2(key)) % 3</code>, mathematically guaranteeing that all transactions originating from a specific user deterministically land on the exact same partition.<br><br>
+        If keys were omitted, round-robin distribution would scatter a user's transactions across partitions. If a ₹5,000 salary credit landed on Partition 0 and a subsequent ₹4,000 purchase landed on Partition 1, a faster consumer thread on Partition 1 would evaluate the purchase first against the pre-salary balance, falsely declining the transaction with <code>INSUFFICIENT_FUNDS</code> due to out-of-order execution."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 3: Two-Tier Idempotency Architecture</div>
+    <div class="interview-q">"Does your Kafka Consumer query Redis or PostgreSQL for idempotency deduplication?"</div>
+    <div class="interview-ans">
+        "Sir, we operate a <b>Two-Tier Deduplication Strategy</b> with distinct separation of responsibilities:<br><br>
+        1. At <b>Tier 1 (Ingestion Gateway)</b>, we evaluate <b>Redis SETNX with a 25-hour TTL</b>. This serves as an ultra-fast, sub-millisecond edge filter that rejects duplicate mesh packets before they ever touch our Kafka cluster.<br><br>
+        2. At <b>Tier 2 (Settlement Consumer)</b>, the consumer does NOT execute a Redis claim. Instead, it relies on the <b>PostgreSQL <code>transaction_ledger</code> table's unique constraint on <code>packet_id</code></b> to intercept rare Kafka at-least-once redeliveries. Once the atomic balance deduction and ledger record commit, the consumer simply marks the Redis status as <code>SETTLED</code>."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 4: Poison Pill Mitigation & Dead-Letter Topics</div>
+    <div class="interview-q">"How does your settlement consumer prevent Head-of-Line blocking when an unparseable or poisoned packet arrives?"</div>
+    <div class="interview-ans">
+        "Sir, unhandled exceptions on a poison message would cause consumer partitions to stall in an infinite retry loop, blocking thousands of healthy subsequent transactions behind it.<br><br>
+        To eliminate Head-of-Line blocking, our consumer uses Spring Kafka's <b>`@RetryableTopic`</b> configured for 3 attempts with exponential backoff (1s, 2s, 4s). If all attempts are exhausted, the framework automatically routes the corrupted packet to our dedicated Dead-Letter Topic (<b>`mesh-payment-settlements-dlt`</b>). This unblocks the partition instantly, allowing healthy transactions to settle while isolating the poisoned payload for manual engineering audit."
+    </div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION 7 -->
+<h1>7. Day 2 Quick Revision & Architecture Matrix</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Architecture Primitive</th>
+            <th>Implementation in ZeroMesh-UPI</th>
+            <th>Why it Exists</th>
+            <th>Production Guarantee</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Cluster Consensus</b></td>
+            <td><code>Kafka KRaft Mode (3.7.0)</code></td>
+            <td>Eliminates Apache ZooKeeper overhead</td>
+            <td>Single binary, sub-second failover, modern standard</td>
+        </tr>
+        <tr>
+            <td><b>Topic Topology</b></td>
+            <td><code>mesh-payment-settlements</code> (3 Partitions)</td>
+            <td>Enables horizontal scaling up to 3 parallel consumers</td>
+            <td>Partition-level strict FIFO sequencing</td>
+        </tr>
+        <tr>
+            <td><b>Message Routing</b></td>
+            <td><code>MurmurHash2(senderUpiId) % 3</code></td>
+            <td>Pins user transactions to exact same partition</td>
+            <td>Prevents out-of-order execution & false insufficient funds</td>
+        </tr>
+        <tr>
+            <td><b>Producer Reliability</b></td>
+            <td><code>acks = all</code> + <code>enable.idempotence = true</code></td>
+            <td>Enforces In-Sync Replica (ISR) persistence + sequence tracking</td>
+            <td>Zero message loss, zero duplicate writes on network retries</td>
+        </tr>
+        <tr>
+            <td><b>Delivery Semantics</b></td>
+            <td>At-Least-Once Delivery + Two-Tier Idempotency</td>
+            <td>Edge Redis SETNX + DB Unique Constraint</td>
+            <td>Mathematical Exactly-Once Processing (EOP)</td>
+        </tr>
+        <tr>
+            <td><b>Dead-Letter Queue</b></td>
+            <td><code>mesh-payment-settlements-dlt</code></td>
+            <td>Diverts poison pills after 3 exponential retries</td>
+            <td>Prevents Head-of-Line blocking on consumer partitions</td>
+        </tr>
+        <tr>
+            <td><b>Consumer Scaling</b></td>
+            <td>1 Consumer (Demo) ➔ 3 Consumers (Prod)</td>
+            <td>1 partition assigned per consumer in group</td>
+            <td>Dynamic rebalancing on consumer node crash</td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; color: #94a3b8; font-size: 8.5pt; margin-top: 24px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+    ZeroMesh-UPI • Comprehensive Interview Prep Guide • Compiled for Sundram Singhal • Day 2 Complete
+</div>
+
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>ZeroMesh-UPI — Day 1 Master Study Notes</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+    @page {
+        size: A4;
+        margin: 14mm 14mm 16mm 14mm;
+        @bottom-right {
+            content: "ZeroMesh-UPI • Day 1 • Page " counter(page);
+            font-family: 'Inter', sans-serif;
+            font-size: 8.5pt;
+            color: #94a3b8;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: #0f172a;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Card */
+    .header-card {
+        background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #0f172a 100%);
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .badge-day {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.25);
+        color: #c7d2fe;
+        border: 1px solid rgba(165, 180, 252, 0.35);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .header-title {
+        font-size: 20pt;
+        font-weight: 900;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+    .header-sub {
+        font-size: 10.5pt;
+        color: #94a3b8;
+        margin: 0 0 14px 0;
+    }
+    .meta-bar {
+        display: flex;
+        gap: 20px;
+        font-size: 8.5pt;
+        color: #cbd5e1;
+        border-top: 1px solid rgba(255,255,255,0.14);
+        padding-top: 10px;
+    }
+    .meta-bar b { color: #38bdf8; }
+
+    /* Headings */
+    h1 {
+        font-size: 14pt;
+        font-weight: 800;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 6px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+    h2 {
+        font-size: 11.5pt;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+    }
+    h3 {
+        font-size: 10pt;
+        font-weight: 600;
+        color: #334155;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        page-break-after: avoid;
+    }
+
+    p { margin: 0 0 10px 0; }
+
+    /* Callout Boxes */
+    .story-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #6366f1;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .story-title {
+        font-weight: 700;
+        color: #4338ca;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
+
+    .warning-box {
+        background: #fffbeb;
+        border: 1px solid #fef3c7;
+        border-left: 4px solid #f59e0b;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .warning-title {
+        font-weight: 700;
+        color: #b45309;
+        margin-bottom: 4px;
+    }
+
+    .danger-box {
+        background: #fef2f2;
+        border: 1px solid #fee2e2;
+        border-left: 4px solid #ef4444;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .danger-title {
+        font-weight: 700;
+        color: #b91c1c;
+        margin-bottom: 4px;
+    }
+
+    .interview-box {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-left: 4px solid #10b981;
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+        margin: 14px 0;
+        page-break-inside: avoid;
+    }
+    .interview-title {
+        font-weight: 800;
+        color: #047857;
+        font-size: 9.5pt;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+    }
+    .interview-q {
+        font-weight: 700;
+        color: #065f46;
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+    .interview-ans {
+        font-size: 9.5pt;
+        color: #0f172a;
+        line-height: 1.5;
+    }
+
+    /* Pitch Card Special */
+    .pitch-card {
+        background: #fdf4ff;
+        border: 1px solid #f5d0fe;
+        border-left: 4px solid #c026d3;
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+        margin: 14px 0;
+        page-break-inside: avoid;
+    }
+    .pitch-title {
+        font-weight: 800;
+        color: #86198f;
+        font-size: 10.5pt;
+        margin-bottom: 6px;
+    }
+    .pitch-sub {
+        font-size: 9pt;
+        color: #701a75;
+        margin-bottom: 8px;
+    }
+    .pitch-bubble {
+        background: #ffffff;
+        border: 1px solid #f0abfc;
+        border-radius: 6px;
+        padding: 12px 14px;
+        font-size: 9.5pt;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+
+    /* Code Blocks */
+    pre, code {
+        font-family: 'Fira Code', Consolas, Monaco, monospace;
+    }
+    code {
+        background: #f1f5f9;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 8.5pt;
+    }
+    pre {
+        background: #090d16;
+        color: #f8fafc;
+        border: 1px solid #1e293b;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 8.5pt;
+        line-height: 1.45;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0 16px 0;
+        font-size: 9pt;
+        page-break-inside: avoid;
+    }
+    th {
+        background: #f1f5f9;
+        color: #0f172a;
+        font-weight: 700;
+        text-align: left;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+    }
+    td {
+        padding: 8px 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    /* ASCII Diagrams */
+    .diagram-box {
+        background: #090d16;
+        color: #38bdf8;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'Fira Code', monospace;
+        font-size: 8pt;
+        line-height: 1.35;
+        white-space: pre;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid #e2e8f0;
+        margin: 18px 0;
+    }
+
+    ul, ol {
+        margin: 4px 0 10px 0;
+        padding-left: 22px;
+    }
+    li {
+        margin-bottom: 4px;
+    }
+
+    .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- Header Card -->
+<div class="header-card">
+    <div class="badge-day">Day 1 of 8 — Master Study Notes (Clean Edition)</div>
+    <div class="header-title">⚡ ZeroMesh-UPI: Foundations, Architecture & Cryptography</div>
+    <div class="header-sub">Same Stories, Same Analogies, Same Hinglish Clarity — Full Deep-Dive Study Guide</div>
+    <div class="meta-bar">
+        <div><b>Candidate:</b> Sundram Singhal</div>
+        <div><b>Format:</b> Hinglish Conceptual Core + Ready-to-Speak English Scripts</div>
+        <div><b>Target Role:</b> Java Backend Developer / SDE-1</div>
+    </div>
+</div>
+
+<!-- SECTION 0: GRAND INTRO PITCH -->
+<div class="pitch-card">
+    <div class="pitch-title">🎙️ 0. The Grand Intro Pitch: "Tell Me About Your Project" (30-Second Elevator Pitch)</div>
+    <div class="pitch-sub">Jab interviewer bole: <i>"Sundram, tell me about your project in 30 seconds"</i> — toh ye exact script bolni hai:</div>
+    
+    <div class="pitch-bubble">
+        <b style="color: #0369a1;">🇬🇧 English Verbal Script (Bolne ke liye):</b><br>
+        <i>"Sir, <b>ZeroMesh-UPI</b> is a fault-tolerant offline payment system built on the core philosophy — <b>'No Internet. No Problem.'</b><br><br>
+        Standard UPI requires a persistent, synchronous internet connection at both sender and receiver. ZeroMesh-UPI eliminates this single point of failure to solve transactions in physical network dead zones like underground metros, basements, and remote areas.<br><br>
+        When an offline user initiates a payment, our app cryptographically seals the transaction using <b>Hybrid Cryptography (RSA-2048 + AES-256-GCM)</b> and propagates it peer-to-peer across nearby stranger devices using an ad-hoc <b>Bluetooth Mesh Gossip Protocol</b>. The moment any device in the mesh catches cellular network, it transitions into an <b>Egress Bridge</b> and batch-flushes the packets to our <b>Apache Kafka</b> event-driven backend.<br><br>
+        At the gateway, distributed <b>Redis SETNX</b> idempotency locks eliminate replay attacks within milliseconds, while the core settlement engine guarantees atomic <b>PostgreSQL ACID</b> double-entry ledger updates with zero double-spending."</i>
+    </div>
+
+    <div class="pitch-bubble" style="margin-bottom: 0;">
+        <b style="color: #4338ca;">🇮🇳 Hinglish Core Pitch (Dimaag me yaad rakhne ke liye):</b><br>
+        <i>"Sir, ZeroMesh-UPI ek aisa system hai jahan bina internet ke bhi UPI payment ho jati hai. Agar aap subway metro me ho, aap offline payment create karte ho. Phone use RSA aur AES tijori me lock karke Bluetooth se paas wale phones ko jump karwata hai. Jaise hi koi ek phone bahar nikal kar 4G pakadta hai, wo Bridge ban kar saare packets Bank ke Kafka backend par upload kar deta hai, jahan Redis duplicate ko block karta hai aur Postgres me bina double-spending ke paise settle ho jate hain!"</i>
+    </div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION 1 -->
+<h1>1. Asli Zindagi ki Problem (Subway Dead Zone)</h1>
+
+<div class="story-box">
+    <div class="story-title">🚇 Asli Zindagi ki Kahani:</div>
+    Socho tum Delhi Metro ke underground station ya kisi mall ke basement parking me khade ho.<br>
+    • Tumhare bank account me <b>₹50,000</b> pade hain.<br>
+    • Tumne paani ki bottle li ya metro token liya (₹500). QR code scan kiya, Pay dabaya.<br>
+    • Screen par kya aata hai? <b style="color: #dc2626;">"No Internet Connection"</b> ya <b style="color: #dc2626;">"Payment Failed"</b>.<br>
+    • Dono ke paas bank account hai, lekin sirf mobile tower na hone ki wajah se payment ruk gayi!
+</div>
+
+<p><b>ZeroMesh-UPI ka Asli Idea:</b></p>
+<p>Agar internet nahi hai, toh kya hua? <b>Har smartphone me Bluetooth toh hamesha on rehta hai!</b> ZeroMesh-UPI ek aisa system hai jahan tum metro ke andar bina internet ke bhi payment kar sakte ho. Tumhara payment packet paas khade anjaan logon ke Bluetooth se jump (hop) karta hua aage badhta hai, aur jaise hi aage kisi ek phone ko thoda sa bhi 4G/5G signal milta hai, wo sabhi payments ko bank ko deliver kar deta hai!</p>
+
+<hr class="divider">
+
+<!-- SECTION 2 -->
+<h1>2. Lifafe aur Tijori ka Concept (Header vs Payload)</h1>
+
+<p>Humare system me payment ek lifafe (<b><code>MeshPacket</code></b>) ke andar band hokar travel karti hai. Aao dekhte hain lifafe ke bahar kya hai aur andar kya hai:</p>
+
+<div class="diagram-box">┌─────────────────────────────────────────────────────────────────────────────┐
+│ 📬 LIFAFA (MeshPacket Header) — Khula / Public (Relay phones ke liye)       │
+│                                                                             │
+│   🏷️ packetId  : SHA-256("kZ8Q...")   ──> Barcode Tracking Number           │
+│   🏷️ ttl       : 5                    ──> Jump Counter (Hop limit)          │
+│   🏷️ createdAt : 1727856000000        ──> Timestamp (24h validity check)    │
+│                                                                             │
+│   ┌──────────────────────────────────────────────────────────────────────┐  │
+│   │ 📦 TIJORI (payload) — Cryptographically Sealed (Locked Data)         │  │
+│   │                                                                      │  │
+│   │   1. 🗄️ BADI TIJORI (ciphertext):                                    │  │
+│   │      Asli Payment Data: "Sundram -> Rahul ₹500".                     │  │
+│   │      Ye locked hai: Ephemeral AES-256 Key se!                        │  │
+│   │                                                                      │  │
+│   │   2. 🔐 CHOTA TITANIUM DABBA (encryptedAesKey):                      │  │
+│   │      Is dabbe ke andar wahi AES Key rakhi hai!                       │  │
+│   │      Ye locked hai: Bank ki Public RSA-2048 Key se!                  │  │
+│   │      Ise khol sakta hai: Sirf aur sirf Bank ki Private Key!          │  │
+│   │                                                                      │  │
+│   │   3. 🎲 RANDOM NUMBER (iv):                                          │  │
+│   │      Initialization Vector (12-byte salt jo AES-GCM me chidka gaya). │  │
+│   └──────────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────┘</div>
+
+<h2>🔎 Asli JSON Packet (Code me kaisa dikhta hai):</h2>
+
+<pre><code>{
+  "packetId": "SR6m2yJaZd7fSI3IjQyM...",    // 🏷️ LIFAFE KE BAHAR: SHA-256 ka Tamper-proof Barcode
+  "ttl": 5,                                // 🏷️ LIFAFE KE BAHAR: Hop Countdown Counter (Jump limit)
+  "createdAt": 1727856000000,              // 🏷️ LIFAFE KE BAHAR: Timestamp (24 ghante validity check)
+  "payload": {
+    "encryptedKey": "A9x... (RSA locked)", // 🔐 ANDAR: AES Key jo Bank ki Public Key se band hai
+    "iv": "dGVzdC1pdi0x...",               // 🎲 ANDAR: Initialization Vector (Random Number Salt)
+    "ciphertext": "kZ8Q... (AES locked)"   // 🗄️ ANDAR: Badi Tijori: Sundram → Rahul ₹500
+  }
+}</code></pre>
+
+<div class="story-box">
+    <div class="story-title">📮 1. LIFAFE KE BAHAR KYA HAI? (Envelope Header — Khula / Public)</div>
+    Ye teenon fields lifafe ke bahar khule hote hain taaki raste ke anjaan phones (Bob, Charlie, Dave) bina lifafa khole ise aage deliver kar sakein:
+    <ul>
+        <li><b><code>packetId</code>:</b> Encrypted ciphertext ka SHA-256 fingerprint (Barcode). Anjaan relay nodes aur Redis isi barcode se duplicate ko pehchante hain.</li>
+        <li><b><code>ttl</code>:</b> Time-To-Live counter (shuruat me <code>5</code>). Har hop par phone ise 1 se minus karta hai. <code>0</code> hone par forwarding ruk jati hai.</li>
+        <li><b><code>createdAt</code>:</b> Mobile phone ka time stamp. Server check karta hai ki packet 24 ghante se purana toh nahi hai.</li>
+    </ul>
+</div>
+
+<div class="story-box">
+    <div class="story-title">🔐 2. LIFAFE KE ANDAR KYA HAI? (Envelope Payload — Band / Encrypted)</div>
+    Lifafe ke andar ek sealed dabba (<code>payload</code>) hota hai jisme 3 cheezein hoti hain:
+    <ul>
+        <li><b><code>ciphertext</code> (Badi Tijori):</b> Asli payment data (<code>Sundram → Rahul ₹500</code>). Ye single-use AES-256 key se locked hota hai. Hacker ya relay nodes ise padh hi nahi sakte.</li>
+        <li><b><code>encryptedKey</code> (Chota Titanium Dabba):</b> Is chote dabbe ke andar wahi AES Key rakhi hoti hai! Aur ye dabba Bank ki Public RSA Key se band hota hai. Ise dunya me sirf Bank ki Private Key khol sakti hai.</li>
+        <li><b><code>iv</code> (Random Salt):</b> 12-byte ka random number jo AES-GCM me dice ki tarah chidka gaya hai taaki har baar ciphertext alag dikhe. Bank ise reverse karke decrypt karta hai.</li>
+    </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECTION 3 -->
+<h1>3. Cryptography Engine: AES + RSA + IV + SHA-256</h1>
+
+<h2>3.1. AES-256-GCM (Ghar ka Godrej Taala)</h2>
+<p><b>AES (Symmetric Encryption):</b> Isme ek hi chaabi se taala band hota hai aur usi chaabi se khulta hai.</p>
+<ul>
+    <li><b>Taakat:</b> Dunya ka sabse fast encryption hai (0.001 millisecond me execute hota hai). Phone ki battery bilkul kharch nahi hoti.</li>
+    <li><b>Kamzori (Key Distribution Problem):</b> Agar Sundram ne AES key se packet lock kar diya, toh Bank ko wo chaabi kaise bhejega? Agar Bluetooth par chaabi bhej di aur hacker ne pakad li, toh hacker taala khol lega!</li>
+</ul>
+
+<h2>3.2. RSA-2048 (Dak-Khane ka Post Box)</h2>
+<p><b>RSA (Asymmetric Encryption):</b> Isme 2 alag-alag chaabiyan hoti hain:</p>
+<ul>
+    <li><b>Public Key:</b> Dunya ke liye khuli hai (Sundram ke phone me pehle se hai). Isse data sirf <b>LOCK</b> ho sakta hai, khul nahi sakta.</li>
+    <li><b>Private Key:</b> Sirf Bank ke paas hoti hai. Dunya me sirf yahi chaabi us lock ko <b>KHOL</b> sakti hai.</li>
+    <li><b>Kamzori:</b> Ye mathematical calculation me bohot heavy hai — AES ke mukable <b>1,000 guna zyada SLOW</b> hai aur phone ki bohot battery khata hai.</li>
+</ul>
+
+<h2>3.3. Hybrid Cryptography (Dono ka Mazedaar Combination)</h2>
+<p>Humne dono ki taakat ko milakar <b>Hybrid System</b> bana diya (jo WhatsApp aur HTTPS bhi use karte hain):</p>
+<ol>
+    <li>Sundram ke phone ne ek temporary, one-time <b>AES Key</b> banayi.</li>
+    <li>Actual payment data (Sundram → Rahul ₹500) ko <b>AES-256-GCM</b> se super-fast lock kar diya (Speed mil gayi!).</li>
+    <li>Ab us choti si AES Key ko Bank ki <b>RSA Public Key</b> se chote titanium dabbe me lock kar diya (Security mil gayi!).</li>
+    <li>Bank jab lifafa kholta hai: Pehle RSA Private Key se chota dabba khol kar AES key nikaalta hai, fir us AES key se actual payment khol leta hai!</li>
+</ol>
+
+<h2>3.4. Random Number / IV ka Concept (The Dice & Salt Analogy)</h2>
+
+<div class="story-box">
+    <div class="story-title">🎲 Maths & Dice ka Example:</div>
+    Maan lo formula hai: <code>Encrypted Data = (Amount × Key)</code>.<br>
+    Agar Amount = ₹500 aur Key = 7 hai, toh Monday ko result banega <b>3500</b>, Tuesday ko bhi <b>3500</b>!<br>
+    Hacker monitor par dekh kar pehchan lega: <i>"Arey, Monday ko bhi 3500 gaya, Tuesday ko bhi 3500 gaya. Ye banda roz ek hi transaction kar raha hai!"</i> (Pattern Leakage Attack).<br><br>
+    Ab formula me <b>Random Number (IV)</b> add karo: <code>Encrypted Data = (Amount × Key) + Random_Number</code>.<br>
+    • Monday (Dice = 42) ➔ Result = <code>3542</code> (Lifafe par chipka diya: IV = 42)<br>
+    • Tuesday (Dice = 915) ➔ Result = <code>4415</code> (Lifafe par chipka diya: IV = 915)<br>
+    Amount bilkul same hai (₹500), lekin bahar aane wala ciphertext 100% alag dikhta hai! Hacker kabhi pattern nahi pakad sakta.<br>
+    Bank wapas kaise nikaalta hai? Bank formula reverse karta hai: <code>(3542 - 42) / 7 = 500</code>!
+</div>
+
+<div class="danger-box">
+    <div class="danger-title">☠️ AES-GCM ka "Forbidden Attack":</div>
+    AES-GCM ek stream cipher hai. Agar tumne ek hi Key aur ek hi IV se 2 alag-alag messages encrypt kar diye, toh maths ke formula me keystream cancel out ho jaati hai! Hacker bina key ke andar ka text nikaal sakta hai aur nakli transactions bana sakta hai. Isliye <b>har transaction me unique random IV hona compulsory hai.</b>
+</div>
+
+<h2>3.5. packetId kaise banti hai? (Mixer Grinder Formula)</h2>
+<p style="text-align: center; font-size: 11pt; color: #0284c7; font-weight: 700; background: #f0f9ff; padding: 8px; border-radius: 6px; border: 1px solid #bae6fd;">
+    packetId = Base64( SHA-256( ciphertext ) )
+</p>
+<ol>
+    <li><b>Step 1:</b> Phone ne data encrypt kiya, use mila ciphertext <code>"kZ8Q2mP9..."</code>.</li>
+    <li><b>Step 2:</b> Java ke SHA-256 mixer grinder me daala. Isne ciphertext ka 32-byte ka unique DNA fingerprint banaya.</li>
+    <li><b>Step 3:</b> Base64 me encode karke bana diya: <code>"SR6m2yJaZd7f..."</code>.</li>
+</ol>
+<p><b>Iske 2 sabse bade fayde:</b></p>
+<ul>
+    <li><b>Tracking Barcode:</b> Redis is barcode ko dekh kar turant pehchan leta hai ki ye packet pehle aaya tha ya naya hai.</li>
+    <li><b>Anti-Tamper Seal:</b> Agar raste me hacker ne ciphertext me ek dot (.) bhi badla, toh Bank dobara hash nikaal kar dekhega aur hash match nahi hoga — transaction turant <b><code>TAMPERED</code></b> mark hokar reject ho jayegi!</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SECTION 4 -->
+<h1>4. Bluetooth Mesh Network & Gossip Protocol</h1>
+
+<h2>4.1. Star Topology vs Mesh Topology</h2>
+<ul>
+    <li><b>Standard UPI (Star Topology):</b> Beech me mobile tower/server hota hai, sabhi phones usse judte hain. Agar tower gaya, toh sab kuch fail (Single Point of Failure).</li>
+    <li><b>ZeroMesh (Mesh Topology):</b> Koi central tower nahi hota. Phones aapas me Bluetooth se judte hain. Agar A aur B ka connection toot bhi jaye, toh packet C aur D ke raste ghoom kar nikal jata hai (Self-Healing Network).</li>
+</ul>
+
+<h2>4.2. Gossip Protocol (Mohalle ki Aunty)</h2>
+<p>Jaise mohalle me aunty ek khabar do padosiyon ko batati hai, aur wo do aage chaar ko batate hain, aur 10 minute me poore mohalle me khabar fail jati hai — waise hi Alice ne packet paas khade 2 phones ko diya, unhone aage 2 ko diya, aur packet metro ke andar jump karta hua aage badhta hai!</p>
+
+<h2>4.3. TTL = 5 Decay (Broadcast Storm rokna)</h2>
+<div class="warning-box">
+    <div class="warning-title">⚠️ The Infinite Loop Problem:</div>
+    Agar koi limit na ho, toh Phone A ➔ B ➔ C ➔ A ➔ B... packet gol-gol ghoomta rahega, saare phones ki battery khatam ho jayegi aur network crash ho jayega (Broadcast Storm)!
+</div>
+<p>Humne laga diya: <b><code>TTL = 5</code></b> (Hop Counter):</p>
+<p style="text-align: center; font-family: 'Fira Code', monospace; font-weight: 700; color: #4338ca; background: #eef2ff; padding: 10px; border-radius: 6px; border: 1px solid #c7d2fe;">
+Hop 1 (TTL=4) ➔ Hop 2 (TTL=3) ➔ Hop 3 (TTL=2) ➔ Hop 4 (TTL=1) ➔ Hop 5 (TTL=0 🛑 Forwarding Stop)
+</p>
+<p>Jaise hi <code>TTL = 0</code> hota hai, phone bolta hai: <i>"Bas, ab ye packet aage kisi ko nahi jayega!"</i></p>
+
+<h2>4.4. Bridge Node (Dave) & Flush Operation</h2>
+<p>Dave escalator se upar metro station ke bahar nikalta hai aur uske phone ko <b>4G/5G signal</b> mil jata hai. Dave ka phone ban jata hai <b>"The Bridge (Pul)"</b>. Dave <code>POST /api/v1/mesh/flush</code> call karke apni memory ke saare offline packets ek sath Bank ke server par upload kar deta hai!</p>
+
+<hr class="divider">
+
+<!-- SECTION 5 -->
+<h1>5. The 4-Stage Ingestion Pipeline (Port 8080)</h1>
+
+<p>Jab Dave packet upload karta hai, toh server ke 4 gatekeeper checks sirf <b>2 se 3 milliseconds</b> me run hote hain:</p>
+
+<div class="diagram-box">Incoming Packet
+      │
+      ▼
+┌──────────────┐
+│   STAGE 1    │ ──> Kya packet 24 ghante se purana hai?
+│ Expiry Check │     HAAN ➔ Status = EXPIRED (Reject!)
+└──────┬───────┘
+       │ NAHI
+       ▼
+┌──────────────┐
+│   STAGE 2    │ ──> Kya SHA-256(ciphertext) != packetId?
+│  Integrity   │     HAAN ➔ Status = TAMPERED (Security Alert!)
+└──────┬───────┘
+       │ NAHI
+       ▼
+┌──────────────┐
+│   STAGE 3    │ ──> Kya Redis SETNX me key pehle se padi hai?
+│ Redis SETNX  │     HAAN ➔ Status = DUPLICATE (Replay Blocked!)
+└──────┬───────┘
+       │ NAHI (Redis Lock lag gaya: "zeromesh:packet:&lt;id&gt;" = PROCESSING, TTL=25h)
+       ▼
+┌──────────────┐
+│   STAGE 4    │ ──> Packet ko Kafka Topic 'mesh-payment-settlements' me phenko!
+│ Kafka Publish│     Aur Dave ke phone ko turant bolo: HTTP 200 OK Accepted!
+└──────────────┘</div>
+
+<div class="page-break"></div>
+
+<!-- SECTION 6 -->
+<h1>6. Saare Production Edge Cases (Tumhare Saare Doubts!)</h1>
+
+<h2>6.1. Redis ka TTL 25 Ghante kyun rakha? (Packet toh 24h ka tha!)</h2>
+<div class="story-box">
+    <div class="story-title">🕒 24 Hours vs 25 Hours Race Condition:</div>
+    Maan lo packet bana Monday 12:00 PM par (valid till Tuesday 12:00 PM).<br>
+    • Dave ne Tuesday <b>11:59 AM</b> par upload kiya (23h 59m old). Packet valid tha, settle ho gaya!<br>
+    • Bob ne wahi packet Tuesday <b>12:01 PM</b> par upload kiya.<br>
+    Agar Redis ka time exactly 24h hota, toh Redis ne Tuesday 12:00 PM par key delete kar di hoti! Bob ke time par key milti hi nahi aur double payment ho jati!<br>
+    Plus, phone aur server ke time me 1-2 minute ka <b>Clock Drift</b> hota hai.<br>
+    <b>Formula:</b> <code>Redis TTL = 24h (Packet Life) + 1h (Safety Buffer) = 25 Hours</code>.<br>
+    Is 1-ghante ke buffer se zero duplicate risk rehta hai aur 25h baad RAM auto-clean ho jati hai!
+</div>
+
+<h2>6.2. Agar 5 phones ke paas packet tha aur Dave ne flush kar diya, toh baaki 4 ka kya hoga?</h2>
+<p>Baaki 4 log abhi bhi metro ke tunnel me hain (no internet). Jab 10 minute baad Bob bahar aayega, Bob ka phone bhi wahi same packet upload karega. Lekin server par <b>Redis SETNX</b> dekhega ki Dave ise 10 minute pehle settle kar chuka hai! Server Bob ke request ko turant <b><code>DUPLICATE / REPLAY ATTACK BLOCKED</code></b> bolkar reject kar dega aur ₹0.00 transfer hoga! Server ka response milte hi Bob ka phone packet delete kar dega.</p>
+
+<h2>6.3. Inject ke baad amount 500 se 3000 kiya toh kya hoga?</h2>
+<p>Sirf ₹500 hi settle honge! Kyunki "Inject" dabate hi packet tijori me lock ho chuka tha. Browser screen par form input edit karne se tijori ke andar ka locked data nahi badalta.</p>
+
+<h2>6.4. Inject ke baad screen lock kyun nahi ki?</h2>
+<p>Taaki user offline me multiple payments queue kar sake (<b>Offline Outbox Batch Queueing</b>). User dukan 1 par ₹500 inject kare, dukan 2 par ₹200 inject kare. Dono packets phone me jama ho jayenge aur ek hi baar Flush dabane par dono ek sath settle ho jayenge.</p>
+
+<h2>6.5. Unknown Account par `INVALID_ACCOUNT` kyun kiya? (`TAMPERED` kyun nahi?)</h2>
+<p>Kyunki banking standards (ISO 20022) me agar hacker data alter kare toh wo <b><code>TAMPERED</code></b> (Security failure) hota hai. Lekin agar kisi ne galat UPI ID daal di, toh wo <b><code>INVALID_ACCOUNT</code></b> (Business validation failure) hota hai. Dono ko alag rakhna standard banking practice hai.</p>
+
+<div class="page-break"></div>
+
+<!-- SECTION 7 -->
+<h1>7. Day 1 Mock Interview Repertoire (Ready English Scripts)</h1>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 1: Architectural Decoupling</div>
+    <div class="interview-q">"Why did you decouple your application into Ingestion Gateway and Settlement Engine instead of a single Monolith?"</div>
+    <div class="interview-ans">
+        "Sir, we separated them to achieve <b>Decoupled Throughput and Fault Isolation</b>.<br><br>
+        The <b>Ingestion Gateway (Port 8080)</b> sits at the edge. Its primary responsibility is <b>high-throughput gatekeeping</b> — validating packet integrity via SHA-256, checking temporal validity, and deduplicating via Redis SETNX within sub-millisecond latency (~2-3ms). It does not perform expensive cryptographic decryption or database writes.<br><br>
+        The <b>Settlement Engine (Port 8081)</b> is compute- and I/O-intensive. It handles RSA-2048 private key decryption, database row locking, and ACID ledger writes.<br><br>
+        If combined into a Monolith, sudden traffic spikes at the edge would exhaust our database connection pools and CPU threads, starving new packet ingestion. By decoupling them via Apache Kafka, our ingestion gateway absorbs peak bursts without backpressure on the core banking database."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 2: Cryptographic Architecture</div>
+    <div class="interview-q">"Why did you use Hybrid Cryptography instead of using RSA or AES alone?"</div>
+    <div class="interview-ans">
+        "Sir, we combined <b>AES-256-GCM</b> and <b>RSA-2048</b> to resolve the fundamental trade-off between computational latency and secure key exchange in an offline environment.<br><br>
+        AES is symmetric and ultra-fast, but distributing a shared secret key across untrusted intermediate Bluetooth peers introduces severe vulnerability. RSA is asymmetric and secure for key exchange, but it is ~1,000x slower and computationally heavy for mobile CPUs.<br><br>
+        In our hybrid architecture, the mobile client encrypts the payment instruction using a fast, ephemeral AES-256 key. It then wraps that single AES key using the bank's public RSA-2048 key. The packet hops across untrusted mesh nodes with zero exposure, as only the central settlement engine holds the private RSA key required to unwrap the AES key and decrypt the payload."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 3: Man-in-the-Middle Attack</div>
+    <div class="interview-q">"What happens if an attacker sniffs a Bluetooth hop and tampers with the ciphertext in transit?"</div>
+    <div class="interview-ans">
+        "Sir, our system provides dual-layer cryptographic tamper prevention:<br><br>
+        First, at <b>Stage 2 of the Ingestion Gateway</b>, the server recalculates <code>SHA-256(ciphertext)</code> and matches it against the asserted <code>packetId</code>. If an attacker altered any bit in transit, the checksum mismatches and the transaction is dropped as <code>TAMPERED</code>.<br><br>
+        Second, even if an attacker attempted to forge both the ciphertext and <code>packetId</code>, our AES cipher operates in <b>GCM (Galois/Counter Mode)</b>, which produces an Authenticated Encryption tag (GMAC). Any bit alteration causes the GCM authentication tag verification to fail during settlement decryption, discarding the packet."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 4: Redis TTL Configuration</div>
+    <div class="interview-q">"Why did you configure Redis idempotency keys with a 25-hour TTL when packets expire in 24 hours?"</div>
+    <div class="interview-ans">
+        "Sir, we enforce a <b>1-hour safety buffer</b> (<code>24h validity + 1h buffer = 25h</code>) to eliminate boundary race conditions and accommodate network clock drift.<br><br>
+        If a packet generated at 12:00 PM is first flushed at 11:59 AM the following day and a duplicate bridge flushes it at 12:01 PM, an exact 24-hour TTL would have evicted the key, permitting a replay attack.<br><br>
+        The 25-hour TTL guarantees that any packet theoretically capable of passing Stage-1 expiry will encounter an active Redis deduplication lock, ensuring strict idempotency before auto-evicting to prevent Redis memory leaks."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 5: CAP Theorem & Consistency Model</div>
+    <div class="interview-q">"Where does ZeroMesh-UPI fit in the CAP Theorem?"</div>
+    <div class="interview-ans">
+        "Sir, ZeroMesh-UPI operates as a <b>Tiered Hybrid CAP architecture</b>:<br><br>
+        1. At the <b>Edge & Mesh Layer</b>, we prioritize <b>AP (Availability and Partition Tolerance)</b>. In an offline subway environment with total network partitioning, the system remains 100% available for payment generation and gossip propagation. We embrace <b>Eventual Consistency</b> here.<br><br>
+        2. However, at the <b>Core Settlement Layer</b>, we strictly transition to <b>CP (Consistency and Partition Tolerance)</b>. When reconciling financial state, financial integrity supersedes availability. We enforce <b>Strong Consistency</b> via atomic database transactions, idempotency locks, and isolated balance deductions to guarantee zero double-spending."
+    </div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION 8: QUICK RECALL MATRIX -->
+<h1>8. Day 1 Quick Revision & Architecture Matrix</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Component</th>
+            <th>Technology / Primitive</th>
+            <th>Role in ZeroMesh-UPI</th>
+            <th>Production Guarantee</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Payment Lock</b></td>
+            <td><code>AES-256-GCM</code></td>
+            <td>Encrypts actual payment payload in client device</td>
+            <td>Sub-millisecond latency, GMAC authentication tag</td>
+        </tr>
+        <tr>
+            <td><b>Key Exchange</b></td>
+            <td><code>RSA-2048 (OAEP)</code></td>
+            <td>Encrypts AES key with Bank's Public Key</td>
+            <td>Zero-trust mesh transit; only Bank private key decrypts</td>
+        </tr>
+        <tr>
+            <td><b>Tamper Seal</b></td>
+            <td><code>SHA-256 + Base64</code></td>
+            <td>Produces unique <code>packetId</code> tracking barcode</td>
+            <td>Deterministic deduplication, bit-level integrity detection</td>
+        </tr>
+        <tr>
+            <td><b>Anti-Pattern Salt</b></td>
+            <td><code>12-byte IV</code></td>
+            <td>Randomized Initialization Vector</td>
+            <td>Prevents pattern leakage & AES-GCM forbidden attack</td>
+        </tr>
+        <tr>
+            <td><b>Mesh Propagation</b></td>
+            <td><code>Bluetooth Gossip (TTL=5)</code></td>
+            <td>Relays packets across intermediate offline phones</td>
+            <td>Prevents broadcast storm & battery exhaustion</td>
+        </tr>
+        <tr>
+            <td><b>Idempotency Lock</b></td>
+            <td><code>Redis SETNX (TTL=25h)</code></td>
+            <td>Deduplicates multi-bridge simultaneous flushes</td>
+            <td>Zero replay attacks, guards against 24h clock drift</td>
+        </tr>
+        <tr>
+            <td><b>Asynchronous Buffer</b></td>
+            <td><code>Apache Kafka (KRaft)</code></td>
+            <td>Decouples Edge Gateway from Settlement Engine</td>
+            <td>Backpressure handling, zero dropped transactions</td>
+        </tr>
+        <tr>
+            <td><b>Financial Ledger</b></td>
+            <td><code>PostgreSQL ACID</code></td>
+            <td>Row-level pessimistic locking on sender/receiver</td>
+            <td>Zero double-spending, complete ledger auditability</td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; color: #94a3b8; font-size: 8.5pt; margin-top: 24px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+    ZeroMesh-UPI • Comprehensive Interview Prep Guide • Compiled for Sundram Singhal • Day 1 Complete
+</div>
+
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>ZeroMesh-UPI — Extra Day 1: JPA @Version & Database Concurrency Deep-Dive</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+    @page {
+        size: A4;
+        margin: 14mm 14mm 16mm 14mm;
+        @bottom-right {
+            content: "ZeroMesh-UPI • Extra Day 1 (@Version) • Page " counter(page);
+            font-family: 'Inter', sans-serif;
+            font-size: 8.5pt;
+            color: #94a3b8;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 10pt;
+        line-height: 1.6;
+        color: #0f172a;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Card */
+    .header-card {
+        background: linear-gradient(135deg, #090d16 0%, #1e1b4b 55%, #0f172a 100%);
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .badge-day {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.25);
+        color: #c7d2fe;
+        border: 1px solid rgba(165, 180, 252, 0.35);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .header-title {
+        font-size: 20pt;
+        font-weight: 900;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+    .header-sub {
+        font-size: 10.5pt;
+        color: #94a3b8;
+        margin: 0 0 14px 0;
+    }
+    .meta-bar {
+        display: flex;
+        gap: 20px;
+        font-size: 8.5pt;
+        color: #cbd5e1;
+        border-top: 1px solid rgba(255,255,255,0.14);
+        padding-top: 10px;
+    }
+    .meta-bar b { color: #38bdf8; }
+
+    /* Headings */
+    h1 {
+        font-size: 14pt;
+        font-weight: 800;
+        color: #0f172a;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 6px;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+    h2 {
+        font-size: 11.5pt;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+    }
+    h3 {
+        font-size: 10pt;
+        font-weight: 600;
+        color: #334155;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        page-break-after: avoid;
+    }
+
+    p { margin: 0 0 10px 0; }
+
+    /* Callout Boxes */
+    .story-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #6366f1;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .story-title {
+        font-weight: 700;
+        color: #4338ca;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
+
+    .warning-box {
+        background: #fffbeb;
+        border: 1px solid #fef3c7;
+        border-left: 4px solid #f59e0b;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .warning-title {
+        font-weight: 700;
+        color: #b45309;
+        margin-bottom: 4px;
+    }
+
+    .danger-box {
+        background: #fef2f2;
+        border: 1px solid #fee2e2;
+        border-left: 4px solid #ef4444;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 9.5pt;
+        page-break-inside: avoid;
+    }
+    .danger-title {
+        font-weight: 700;
+        color: #b91c1c;
+        margin-bottom: 4px;
+    }
+
+    .interview-box {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-left: 4px solid #10b981;
+        border-radius: 0 8px 8px 0;
+        padding: 14px 18px;
+        margin: 14px 0;
+        page-break-inside: avoid;
+    }
+    .interview-title {
+        font-weight: 800;
+        color: #047857;
+        font-size: 9.5pt;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+    }
+    .interview-q {
+        font-weight: 700;
+        color: #065f46;
+        font-style: italic;
+        margin-bottom: 8px;
+    }
+    .interview-ans {
+        font-size: 9.5pt;
+        color: #0f172a;
+        line-height: 1.5;
+    }
+
+    /* Code Blocks */
+    pre, code {
+        font-family: 'Fira Code', Consolas, Monaco, monospace;
+    }
+    code {
+        background: #f1f5f9;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 8.5pt;
+    }
+    pre {
+        background: #090d16;
+        color: #f8fafc;
+        border: 1px solid #1e293b;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 8.5pt;
+        line-height: 1.45;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0 16px 0;
+        font-size: 9pt;
+        page-break-inside: avoid;
+    }
+    th {
+        background: #f1f5f9;
+        color: #0f172a;
+        font-weight: 700;
+        text-align: left;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+    }
+    td {
+        padding: 8px 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+        vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    /* ASCII Diagrams */
+    .diagram-box {
+        background: #090d16;
+        color: #38bdf8;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'Fira Code', monospace;
+        font-size: 8pt;
+        line-height: 1.35;
+        white-space: pre;
+        margin: 12px 0;
+        page-break-inside: avoid;
+    }
+
+    .divider {
+        border: none;
+        border-top: 1px solid #e2e8f0;
+        margin: 18px 0;
+    }
+
+    ul, ol {
+        margin: 4px 0 10px 0;
+        padding-left: 22px;
+    }
+    li {
+        margin-bottom: 4px;
+    }
+
+    .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- Header Card -->
+<div class="header-card">
+    <div class="badge-day">Special Supplement — Extra Day 1 Master Notes</div>
+    <div class="header-title">⚡ Database Concurrency: JPA @Version & Double-Spending Prevention</div>
+    <div class="header-sub">Optimistic vs. Pessimistic Locking, The Cunning Sundram Scenario, Whiteboard Analogy & MySQL Compatibility</div>
+    <div class="meta-bar">
+        <div><b>Candidate:</b> Sundram Singhal</div>
+        <div><b>Project:</b> ZeroMesh-UPI</div>
+        <div><b>Target Role:</b> Java Backend Developer / SDE-1</div>
+    </div>
+</div>
+
+<!-- SECTION 1 -->
+<h1>1. The Golden Dilemma: Optimistic vs. Pessimistic Locking</h1>
+
+<div class="warning-box">
+    <div class="warning-title">⚠️ The Interview Trap:</div>
+    Agar interviewer ne pucha: <i>"Aapne database me concurrency control kaise kiya?"</i> aur aapne bola: <b>"Maine @Version annotation lagakar pessimistic locking ki"</b> — toh interviewer turant pakad lega aur bolega: <b>"@Version toh OPTIMISTIC LOCKING hoti hai!"</b>
+</div>
+
+<p>Aao in dono ka basic concept hamesha ke liye dimaag me crystal-clear baitha lete hain:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>Optimistic Locking (JPA <code>@Version</code>)</th>
+            <th>Pessimistic Locking (<code>PESSIMISTIC_WRITE</code>)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Mental Philosophy</b></td>
+            <td><b>"Asha-waadi" (Optimistic):</b> Ye maanti hai ki conflicts bohot kam aayenge. Pehle kaam karo, save karte waqt check karo.</td>
+            <td><b>"Darpok / Savdhan" (Pessimistic):</b> Ye maanti hai ki conflict pakka aayega. Read karte hi table row par taala laga do!</td>
+        </tr>
+        <tr>
+            <td><b>Database Level Lock?</b></td>
+            <td><b>NO!</b> Database row par koi physical lock ya waiting queue nahi hoti. Bas ek extra integer column hota hai: <code>version</code>.</td>
+            <td><b>YES!</b> Database level par physical row lock lagta hai via <code>SELECT ... FOR UPDATE</code>. Doosre threads line me block ho jate hain.</td>
+        </tr>
+        <tr>
+            <td><b>Java Implementation</b></td>
+            <td><code>@Version private Long version;</code> on the JPA Entity.</td>
+            <td><code>@Lock(LockModeType.PESSIMISTIC_WRITE)</code> on the Repository query method.</td>
+        </tr>
+        <tr>
+            <td><b>Conflict Resolution</b></td>
+            <td>Jab do log ek sath save karte hain, toh doosre wale par <code>OptimisticLockException</code> throw hoti hai aur rollback hota hai.</td>
+            <td>Doosra thread pehle thread ke transaction <code>COMMIT</code> hone tak intezaar (wait) karta hai.</td>
+        </tr>
+        <tr>
+            <td><b>Best Use Case</b></td>
+            <td>High-throughput read-heavy systems, jahan conflicts rare hote hain (Hamara <code>ZeroMesh-UPI</code> Account entity!).</td>
+            <td>Ultra-high contention systems jahan bar-bar collision hoti hai (jaise Tatkal ticket booking, flash sales).</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr class="divider">
+
+<!-- SECTION 2 -->
+<h1>2. Version Asal Me Kya Hai aur Ise Kaun Badhata Hai?</h1>
+
+<h2>2.1. Version Column Table me kaisa dikhta hai?</h2>
+<p>Database ke andar <code>accounts</code> table me <code>version</code> bas ek aam number column hota hai jo <code>0</code> ya <code>1</code> se shuru hota hai:</p>
+
+<pre><code>CREATE TABLE accounts (
+    id BIGINT PRIMARY KEY,
+    upi_id VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    balance NUMERIC(19, 2) NOT NULL,
+    version BIGINT NOT NULL DEFAULT 0    -- 🏷️ Bas ek Token / Counter number!
+);</code></pre>
+
+<h2>2.2. Kya Hume Java me <code>version++</code> likhna padta hai?</h2>
+<p><b>NAHI! Bilkul nahi!</b> Ye sara kaam <b>Hibernate (JPA)</b> apne aap background me karta hai jab entity par <code>@Version</code> laga hota hai:</p>
+
+<pre><code>// Hamare ZeroMesh-UPI ke Account.java ka actual code:
+@Entity
+@Table(name = "accounts")
+public class Account {
+    ...
+    @Column(name = "balance", nullable = false)
+    private BigDecimal balance;
+
+    @Version
+    private Long version;    // 🛡️ JPA Optimistic Concurrency Token
+}</code></pre>
+
+<p>Jab service me hum likhte hain:</p>
+<pre><code>sender.setBalance(sender.getBalance().subtract(amount));
+accountRepository.save(sender); // 💾 Save method call kiya</code></pre>
+
+<p>Toh Hibernate database ko aisi aam query <b>NAHI</b> bhejta:</p>
+<p style="color: #dc2626; font-family: 'Fira Code', monospace; background: #fef2f2; padding: 6px; border-radius: 4px;">❌ Naive Query: UPDATE accounts SET balance = 500 WHERE id = 1;</p>
+
+<p>Balki Hibernate chalaki se <b>YE ATOMIC VERSION QUERY</b> bhejta hai:</p>
+<p style="color: #047857; font-family: 'Fira Code', monospace; background: #f0fdf4; padding: 8px; border-radius: 4px; font-weight: 700;">
+✅ Special Query: UPDATE accounts SET balance = 500, version = version + 1 WHERE id = 1 AND version = 5;
+</p>
+
+<div class="story-box">
+    <div class="story-title">🔍 Is SQL Query ka Magic:</div>
+    <ul>
+        <li><b><code>version = version + 1</code>:</b> Database khud version ko 5 se badha kar 6 kar deta hai!</li>
+        <li><b><code>WHERE id = 1 AND version = 5</code>:</b> Database check karta hai: <i>"Kya version abhi bhi wahi 5 hai jo Sundram ne padha tha?"</i> Agar kisi aur ne beech me badal kar 6 kar diya, toh <b>0 rows update</b> hongi!</li>
+    </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECTION 3 -->
+<h1>3. The Whiteboard & Diary Roommate Analogy</h1>
+
+<div class="story-box">
+    <div class="story-title">📝 Hostel Whiteboard ki Kahani:</div>
+    Maan lo hostel ke room ki deewar par ek <b>Whiteboard</b> laga hai jisme grocery ke paise likhe hain:<br>
+    <div style="background: #090d16; color: #38bdf8; padding: 8px; border-radius: 4px; margin: 8px 0; font-family: 'Fira Code', monospace; text-align: center;">
+        Room Balance = ₹2,000 | Token Number = 5
+    </div>
+    Ab do roommates (<b>Thread A</b> aur <b>Thread B</b>) ek hi waqt par whiteboard ke paas aate hain ₹1,500 nikaalne:
+</div>
+
+<h3>🕒 Step 1: Dono ne apni diary me note kiya</h3>
+<ul>
+    <li><b>Thread A ne apni diary me likha:</b> <i>"Maine board par dekha Token = 5 hai, Balance = ₹2,000 hai. Mujhe ₹1,500 nikaalna hai, toh bachega ₹500."</i></li>
+    <li><b>Thread B ne bhi apni diary me likha:</b> <i>"Maine board par dekha Token = 5 hai, Balance = ₹2,000 hai. Mujhe ₹1,500 nikaalna hai, toh bachega ₹500."</i></li>
+</ul>
+
+<h3>🕒 Step 2: Thread A ne board par pen chala diya</h3>
+<ul>
+    <li>Thread A board par gaya, usne balance likh diya <b>₹500</b>, aur Token badha kar kar diya <b>6</b>!</li>
+    <li>Thread A ka transaction <code>COMMIT</code> ho gaya.</li>
+</ul>
+
+<h3>🕒 Step 3: Thread B (1 millisecond baad) board par pen chalane aaya</h3>
+<ul>
+    <li>Thread B ki diary me kya condition thi? <b>"Main tabhi likhunga jab Board par Token = 5 ho!"</b></li>
+    <li>Thread B ne board par dekha: <i>"Arey! Board par Token 5 bacha hi nahi, wo toh 6 ho chuka hai!"</i></li>
+    <li>Database bolta hai: <code>0 rows updated</code>.</li>
+    <li>Hibernate cheekhta hai: <b><code>OptimisticLockException</code>!</b></li>
+    <li>Thread B ka transaction turant <b>Rollback (Cancel)</b> ho jata hai!</li>
+</ul>
+
+<hr class="divider">
+
+<!-- SECTION 4 -->
+<h1>4. Asli ZeroMesh-UPI Scenario: The Cunning Sundram</h1>
+
+<div class="story-box">
+    <div class="story-title">🎭 Real-World Project Scenario:</div>
+    Socho Sundram metro ke basement me khada hai (no internet).<br>
+    • Tumhare bank account me sirf <b>₹2,000</b> pade hain.<br>
+    • Tum chalaki lagate ho: <i>"Abhi offline hai, bank ko thodi pata chalega!"</i><br>
+    • Tum do alag-alag dukaano par jaakar ₹1,500 - ₹1,500 ke do offline payments bana dete ho:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;1. <b>Packet A (Dukaan 1 - Chai wala):</b> ₹1,500<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;2. <b>Packet B (Dukaan 2 - Kitab wala):</b> ₹1,500<br>
+    • <b>Total Kharcha:</b> ₹3,000 (lekin account me sirf ₹2,000 hain!).
+</div>
+
+<h2>❓ Sawal: Redis SETNX ne isko kyu nahi roka?</h2>
+<div class="warning-box">
+    <div class="warning-title">💡 Redis ka Scope samjho:</div>
+    • Packet A ka barcode alag hai: <code>packetId = SHA-256(Packet A) = "SR6m..."</code><br>
+    • Packet B ka barcode alag hai: <code>packetId = SHA-256(Packet B) = "kZ8Q..."</code><br>
+    <b>Redis SETNX sirf SAME barcode ke duplicate ko rokta hai!</b> Yahan do alag-alag valid payments hain, isliye Redis dono ko pass kar dega aur Kafka me phenk dega!
+</div>
+
+<h2>💥 Agar `@Version` NAHI hota, toh kya ghamasan hota (The Bug):</h2>
+<p>Kafka se do consumer threads ek sath dono packets process karne lagte:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Thread 1 (Dukaan 1: ₹1,500)</th>
+            <th>Thread 2 (Dukaan 2: ₹1,500)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>0ms</b></td>
+            <td>Database se padha: Balance = <b>₹2,000</b></td>
+            <td>Database se padha: Balance = <b>₹2,000</b></td>
+        </tr>
+        <tr>
+            <td><b>10ms</b></td>
+            <td>Check: ₹2000 > ₹1500? Haan! Balance = <b>₹500</b> calculate kiya.</td>
+            <td>Check: ₹2000 > ₹1500? Haan! Balance = <b>₹500</b> calculate kiya.</td>
+        </tr>
+        <tr>
+            <td><b>20ms</b></td>
+            <td>DB Save: Balance = <b>₹500</b> ✅</td>
+            <td>DB Save: Balance = <b>₹500</b> ✅ (Overwritten!)</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="danger-box">
+    <div class="danger-title">☠️ The Double-Spending Catastrophe:</div>
+    Sundram ne ₹3,000 ka saaman khareed liya, jabki uske account me sirf ₹2,000 the! Aur transaction ke baad account me abhi bhi ₹500 bache hue hain! <b>Ye ₹1,500 hawa me se paida ho gaye — banking system ke liye sabse bada disaster!</b>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECTION 5 -->
+<h1>5. Hamare Code me `@Version` ne Collision kaise roka?</h1>
+
+<div class="diagram-box">Thread 1 (Dukaan 1: ₹1,500)               Thread 2 (Dukaan 2: ₹1,500)
+       │                                         │
+ 0ms   ├─ READ: Balance = ₹2,000, version = 5    ├─ READ: Balance = ₹2,000, version = 5
+       │                                         │
+10ms   ├─ DEDUCT ₹1,500                          │
+       ├─ SQL: UPDATE accounts                   │
+       │       SET balance = 500, version = 6    │
+       │       WHERE id = 1 AND version = 5;     │
+       │  (✅ 1 row updated! version ab 6 hai)   │
+       │                                         │
+20ms   │                                         ├─ SQL: UPDATE accounts
+       │                                         │       SET balance = 500, version = 6
+       │                                         │       WHERE id = 1 AND version = 5;
+       │                                         │  (💥 0 rows updated! version is now 6!)
+       │                                         │
+       │                                         ├─ 💥 OptimisticLockException thrown!
+       │                                         ├─ Transaction ROLLBACK!
+       │                                         │
+30ms   │                                         ├─ Consumer Retries & Re-Reads Database:
+       │                                         │  Ab milta hai: Balance = ₹500, version = 6
+       │                                         ├─ Check: sender.getBalance() < ₹1,500?
+       │                                         │  HAAN! (₹500 is less than ₹1,500)
+       │                                         ├─ Status = INSUFFICIENT_FUNDS ❌ (Rejected!)
+       ▼                                         ▼</div>
+
+<p>Is tarah, chahe kitne bhi offline packets ek sath flush ho jayein, **Sundram apne ₹2,000 se ₹1 zyada bhi kharch nahi kar sakta! Zero Double-Spending Guaranteed!**</p>
+
+<hr class="divider">
+
+<!-- SECTION 6 -->
+<h1>6. Does MySQL Have This? (Postgres vs MySQL)</h1>
+
+<p><b>HAAN, 100% YES! MySQL me bhi bilkul same to same chalta hai!</b></p>
+
+<h3>Kyu?</h3>
+<ol>
+    <li><b>Database-Agnostic Hibernate Feature:</b> <code>@Version</code> koi PostgreSQL-specific feature nahi hai. Ye standard JPA (Java Persistence API) specification ka hissa hai. Chaahe database PostgreSQL ho, MySQL ho, Oracle ho ya SQL Server — Hibernate sabhi ke liye standard <code>UPDATE ... WHERE id = ? AND version = ?</code> query bhejta hai.</li>
+    <li><b>MySQL InnoDB Row Count:</b> Jab MySQL par ye query chalti hai:
+        <ul>
+            <li>Agar row match ho gayi: MySQL returns <code>1 row affected</code>.</li>
+            <li>Agar collision hua aur version pehle hi badal chuka hai: MySQL returns <code>0 rows affected</code>.</li>
+        </ul>
+        Jaise hi 0 rows return hoti hain, Hibernate turant <code>OptimisticLockException</code> throw kar deta hai!
+    </li>
+    <li><b>Raw SQL in MySQL (Without Hibernate):</b> Agar aap bina Hibernate ke pure JDBC / MySQL me bhi code likh rahe ho, tab bhi aap <code>SELECT ROW_COUNT();</code> use karke optimistic locking implement kar sakte ho:
+<pre><code>UPDATE accounts 
+SET balance = 500, version = version + 1 
+WHERE id = 1 AND version = 5;
+
+SELECT ROW_COUNT(); -- Agar 0 aaya, iska matlab collision ho gaya!</code></pre>
+    </li>
+</ol>
+
+<hr class="divider">
+
+<!-- SECTION 7 -->
+<h1>7. Top Verbal Interview Scripts (Bolne ke liye)</h1>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 1: Concurrency Control in ZeroMesh-UPI</div>
+    <div class="interview-q">"How did you prevent double-spending when multiple offline packets for the same user arrive at the settlement engine concurrently?"</div>
+    <div class="interview-ans">
+        "Sir, we enforce <b>Optimistic Concurrency Control (OCC) using JPA `@Version`</b> on our <code>Account</code> entity combined with atomic Spring <code>@Transactional</code> boundaries.<br><br>
+        If an offline user attempts to double-spend by generating two distinct ₹1,500 payments against an initial balance of ₹2,000, both packets bypass Redis deduplication because they possess distinct SHA-256 hashes.<br><br>
+        However, when concurrent Kafka consumer threads attempt to debit the user's account, Hibernate executes an atomic conditional update: <code>UPDATE accounts SET balance = ?, version = version + 1 WHERE id = ? AND version = ?</code>. The first thread commits and increments the version token. The second thread detects 0 rows updated due to the version mismatch and triggers an <code>OptimisticLockException</code>. Upon re-evaluation, the remaining balance of ₹500 is found insufficient, rejecting the second transaction with <code>INSUFFICIENT_FUNDS</code>."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 2: Optimistic vs. Pessimistic Locking Choice</div>
+    <div class="interview-q">"Why did you choose Optimistic Locking over Pessimistic Locking (SELECT FOR UPDATE) for the Account balance?"</div>
+    <div class="interview-ans">
+        "Sir, we selected Optimistic Locking because in typical payment workflows, <b>read operations heavily outweigh write collisions</b> across distributed users. Pessimistic locking (<code>SELECT ... FOR UPDATE</code>) acquires exclusive row locks at the database level, holding database connections open and introducing thread contention and lock latency.<br><br>
+        By leveraging JPA `@Version`, we maintain non-blocking reads and high database throughput without holding locks, while still mathematically guaranteeing complete transactional consistency and zero double-spending during rare collision events."
+    </div>
+</div>
+
+<div class="interview-box">
+    <div class="interview-title">🎙️ QUESTION 3: Multi-Database Portability</div>
+    <div class="interview-q">"Is this locking mechanism dependent on PostgreSQL, or would it work if migrated to MySQL?"</div>
+    <div class="interview-ans">
+        "Sir, it is completely database-agnostic. JPA's `@Version` mechanism operates at the ORM layer and translates into standard ANSI SQL. Both PostgreSQL and MySQL (InnoDB) return the number of affected rows for an update statement. When a version collision occurs, MySQL returns zero affected rows, causing Hibernate to throw the identical <code>OptimisticLockException</code> regardless of the underlying relational database."
+    </div>
+</div>
+
+<div style="text-align: center; color: #94a3b8; font-size: 8.5pt; margin-top: 24px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+    ZeroMesh-UPI • Database Concurrency Study Supplement • Compiled for Sundram Singhal • Extra Day 1 Complete
+</div>
+
+</body>
+</html>
