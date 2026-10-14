@@ -4,6 +4,7 @@ import com.zeromesh.model.TransactionLedger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,4 +13,6 @@ public interface TransactionLedgerRepository extends JpaRepository<TransactionLe
     Optional<TransactionLedger> findByPacketId(String packetId);
 
     boolean existsByPacketId(String packetId);
+
+    List<TransactionLedger> findTop100ByOrderByIdDesc();
 }

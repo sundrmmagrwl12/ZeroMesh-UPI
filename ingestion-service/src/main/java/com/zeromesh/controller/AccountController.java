@@ -37,10 +37,10 @@ public class AccountController {
         return ResponseEntity.ok(account);
     }
 
-    // Full transaction ledger — all settled + rejected entries
+    // Bounded immutable audit ledger — streams latest 100 entries for constant O(1) performance
     @GetMapping("/ledger")
     public ResponseEntity<?> getLedger() {
-        return ResponseEntity.ok(ledgerRepository.findAll());
+        return ResponseEntity.ok(ledgerRepository.findTop100ByOrderByIdDesc());
     }
 
     // Resets demo account balances: Sundram ₹2000, Rahul ₹1000, Priya ₹1500

@@ -398,13 +398,162 @@
         .pg-perpage select { background: rgba(10,15,28,0.8); border: 1px solid var(--border-subtle); color: var(--text-muted); padding: 4px 8px; border-radius: 6px; font-size: 11px; outline: none; cursor: pointer; }
         .pg-perpage select:focus { border-color: var(--accent-blue); }
 
-        /* Toasts */
-        #toast-shelf { position: fixed; bottom: 24px; right: 24px; display: flex; flex-direction: column; gap: 10px; z-index: 999; }
-        .toast-msg { background: rgba(15,23,42,0.95); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 12px 18px; display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.6); animation: slide-in 0.3s cubic-bezier(0.4,0,0.2,1); }
+        /* Toasts (Industry Standard: Bottom-Right Toaster) */
+        #toast-shelf {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 10px;
+            z-index: 9999;
+            pointer-events: none;
+            max-width: 380px;
+        }
+        .toast-msg {
+            background: rgba(13, 20, 36, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 11px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-main);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 15px rgba(0, 0, 0, 0.3);
+            animation: toast-slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.25s ease;
+        }
+        .toast-msg:hover { filter: brightness(1.12); transform: scale(1.02); }
         .toast-msg.ok   { border-left: 3px solid var(--accent-emerald); }
         .toast-msg.err  { border-left: 3px solid var(--accent-rose); }
         .toast-msg.info { border-left: 3px solid var(--accent-blue); }
-        @keyframes slide-in { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes toast-slide-up {
+            from { transform: translateY(16px) scale(0.95); opacity: 0; }
+            to   { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes toast-pulse {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        /* Custom Modal Dialog */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 7, 16, 0.78);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(10, 15, 29, 0.96));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 440px;
+            padding: 24px;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.1);
+            transform: scale(0.92) translateY(12px);
+            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal-card {
+            transform: scale(1) translateY(0);
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+        .modal-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            background: rgba(244, 63, 94, 0.12);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: var(--accent-rose);
+        }
+        .modal-icon.warning {
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--accent-amber);
+        }
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+        .modal-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 22px;
+            padding-left: 2px;
+        }
+        .modal-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .modal-btn {
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.16s ease;
+            border: 1px solid transparent;
+        }
+        .modal-btn-cancel {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--border-subtle);
+            color: var(--text-muted);
+        }
+        .modal-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+        }
+        .modal-btn-confirm {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            color: white;
+            box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+        }
+        .modal-btn-confirm:hover {
+            background: linear-gradient(135deg, #fb7185, #f43f5e);
+            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.45);
+            transform: translateY(-1px);
+        }
+        .modal-btn-confirm.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        .modal-btn-confirm.warning:hover {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+        }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -606,8 +755,7 @@
                 <div class="stat-capsule">Settled: <b id="stat-settled">0</b></div>
                 <div class="stat-capsule">Rejected/Tampered: <b id="stat-rejected">0</b></div>
                 <div class="stat-capsule">Volume: <b id="stat-volume">₹ 0.00</b></div>
-                <button class="btn-action btn-reset" style="padding:4px 10px; font-size:11px;" onclick="fetchLedger()">↻ Sync</button>
-                <button class="btn-action btn-reset" style="padding:4px 10px; font-size:11px; border-color:rgba(244,63,94,0.3); color:#fb7185;" onclick="actionClearLedger()" title="Clear transaction ledger history">✕ Clear</button>
+                <button class="btn-action btn-reset" style="padding:4px 10px; font-size:11px;" onclick="fetchLedger()" title="Sync audit ledger with database">↻ Sync</button>
             </div>
         </div>
 
@@ -649,6 +797,21 @@
 
 </div>
 
+<!-- Custom Confirmation Modal -->
+<div id="confirm-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div id="modal-icon" class="modal-icon">⚠️</div>
+            <div id="modal-title" class="modal-title">Confirm Action</div>
+        </div>
+        <div id="modal-msg" class="modal-desc">Are you sure you want to proceed?</div>
+        <div class="modal-actions">
+            <button id="modal-cancel-btn" class="modal-btn modal-btn-cancel" type="button">Cancel</button>
+            <button id="modal-confirm-btn" class="modal-btn modal-btn-confirm" type="button">Confirm</button>
+        </div>
+    </div>
+</div>
+
 <!-- Toast shelf -->
 <div id="toast-shelf"></div>
 
@@ -663,19 +826,116 @@ let _pgCurrent  = 1;
 let _pgSize     = 10;
 let _lastLedgerSig = '';
 
-// Notifications
+// Notifications (Deduplicated, Bottom-Right, Max 2 visible)
 function toast(msg, type = 'info') {
+    const shelf = document.getElementById('toast-shelf');
+    if (!shelf) return;
+
+    // 1. Prevent Duplicate Toasts: If identical message is already visible, pulse it and reset timer
+    const existing = Array.from(shelf.querySelectorAll('.toast-msg')).find(el => {
+        const textSpan = el.querySelector('span:last-child');
+        return textSpan && textSpan.textContent.trim() === msg.trim();
+    });
+
+    if (existing) {
+        existing.style.animation = 'none';
+        existing.offsetHeight; // trigger reflow
+        existing.style.animation = 'toast-pulse 0.4s ease';
+        if (existing._timer) clearTimeout(existing._timer);
+        existing._timer = setTimeout(() => dismissToast(existing), 3200);
+        return;
+    }
+
+    // 2. Max 2 Toasts on screen: dismiss the oldest one if 2 or more are showing
+    const currentToasts = shelf.querySelectorAll('.toast-msg');
+    if (currentToasts.length >= 2) {
+        dismissToast(currentToasts[0]);
+    }
+
+    // 3. Create new Toast
     const icons = { ok: '✅', err: '❌', info: '⚡' };
     const el = document.createElement('div');
     el.className = `toast-msg ${type}`;
+    el.title = 'Click to dismiss';
+    el.onclick = () => dismissToast(el);
     el.innerHTML = `<span>${icons[type] || '⚡'}</span><span>${msg}</span>`;
-    document.getElementById('toast-shelf').appendChild(el);
-    setTimeout(() => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateX(100%)';
-        el.style.transition = 'all 0.3s ease';
-        setTimeout(() => el.remove(), 300);
-    }, 3800);
+    shelf.appendChild(el);
+
+    el._timer = setTimeout(() => dismissToast(el), 3200);
+}
+
+function dismissToast(el) {
+    if (!el || el._isDismissing) return;
+    el._isDismissing = true;
+    if (el._timer) clearTimeout(el._timer);
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'all 0.25s ease';
+    setTimeout(() => { if (el.parentNode) el.remove(); }, 250);
+}
+
+// Custom Modal Confirmation Dialog
+function showConfirm({
+    title = 'Confirm Action',
+    message = 'Are you sure you want to proceed?',
+    confirmText = 'Confirm',
+    cancelText = 'Cancel',
+    icon = '⚠️',
+    isDanger = true
+} = {}) {
+    return new Promise(resolve => {
+        const modal = document.getElementById('confirm-modal');
+        const titleEl = document.getElementById('modal-title');
+        const msgEl = document.getElementById('modal-msg');
+        const iconEl = document.getElementById('modal-icon');
+        const confirmBtn = document.getElementById('modal-confirm-btn');
+        const cancelBtn = document.getElementById('modal-cancel-btn');
+
+        if (!modal || !confirmBtn || !cancelBtn) {
+            resolve(window.confirm(message));
+            return;
+        }
+
+        titleEl.textContent = title;
+        msgEl.textContent = message;
+        iconEl.textContent = icon;
+        confirmBtn.textContent = confirmText;
+        cancelBtn.textContent = cancelText;
+
+        if (isDanger) {
+            iconEl.className = 'modal-icon';
+            confirmBtn.className = 'modal-btn modal-btn-confirm';
+        } else {
+            iconEl.className = 'modal-icon warning';
+            confirmBtn.className = 'modal-btn modal-btn-confirm warning';
+        }
+
+        modal.classList.add('active');
+
+        function cleanup(result) {
+            modal.classList.remove('active');
+            confirmBtn.removeEventListener('click', onConfirm);
+            cancelBtn.removeEventListener('click', onCancel);
+            modal.removeEventListener('click', onOverlay);
+            document.removeEventListener('keydown', onKey);
+            resolve(result);
+        }
+
+        function onConfirm() { cleanup(true); }
+        function onCancel() { cleanup(false); }
+        function onOverlay(e) { if (e.target === modal) cleanup(false); }
+        function onKey(e) {
+            if (e.key === 'Escape') cleanup(false);
+            if (e.key === 'Enter') cleanup(true);
+        }
+
+        confirmBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click', onCancel);
+        modal.addEventListener('click', onOverlay);
+        document.addEventListener('keydown', onKey);
+
+        confirmBtn.focus();
+    });
 }
 
 // Terminal logger
@@ -851,7 +1111,8 @@ async function fetchLedger() {
         document.getElementById('stat-rejected').textContent = rejected.length;
         document.getElementById('stat-volume').textContent   = '₹ ' + vol.toLocaleString('en-IN', { minimumFractionDigits: 2 });
 
-        const real = data.filter(r => r.senderId !== 'PENDING' && r.senderId !== 'QUEUED').reverse();
+        const real = data.filter(r => r.senderId !== 'PENDING' && r.senderId !== 'QUEUED')
+                         .sort((a, b) => (b.id || 0) - (a.id || 0));
         _ledgerData = real;
 
         if (real.length === 0) {
@@ -956,21 +1217,16 @@ function clearTerminal() {
     log('Terminal logs cleared.', 'dim');
 }
 
-// Clear ledger
-async function actionClearLedger() {
-    if (!confirm('Clear all audit ledger records from database?')) return;
-    try {
-        await safeFetch(`${API}/api/v1/accounts/ledger/clear`, { method: 'POST' });
-        _lastLedgerSig = '';
-        await fetchLedger();
-        log('Immutable audit ledger cleared from database.', 'warn');
-        toast('Audit ledger cleared!', 'info');
-    } catch (e) { log('Clear ledger failed: ' + e.message, 'err'); }
-}
-
 // Reset mesh
 async function actionReset() {
-    if (!confirm('Clear all pending packets across the mesh network?')) return;
+    const ok = await showConfirm({
+        title: 'Reset Mesh Network',
+        message: 'Clear all pending packets across the mesh network?',
+        confirmText: 'Reset Mesh',
+        icon: '⚡',
+        isDanger: true
+    });
+    if (!ok) return;
     try {
         await safeFetch(`${API}/api/v1/mesh/reset`, { method: 'POST' });
         await fetchNetwork();
